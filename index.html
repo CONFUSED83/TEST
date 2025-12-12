@@ -3,296 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Statistics Study Notes - The Foundation</title>
+    <title>Python 🐍 Fundamentals Study Sheet</title>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.typesetPromise();
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
-        /* --- 1. The Foundation (Background & Texture) & 2. Color Palette --- */
+        /* CSS Variables - The "Pen" Set and Texture */
         :root {
-            /* Cream Paper Background & Grid */
-            --bg-color: #FDFCF5; /* Off-white, creamy beige */
-            --grid-line: #D0D4E0; /* Faint light gray/blue */
-            /* Pen Colors */
-            --pen-black: #2C2C2C; /* Deep Charcoal (Primary Text) */
-            --pen-red: #D93025; /* Standard Red Ballpoint (Chapter/Alerts) */
-            --pen-blue: #1A73E8; /* Royal Blue (Sub-headers/Structure) */
-            --highlighter: rgba(255, 235, 59, 0.3); /* Semi-transparent Yellow (Questions) */
-            /* Typography */
+            --bg-color: #fcfbf9; /* Cream Paper */
+            --grid-line: #e3e3e3; /* Faint Gray/Blue Grid */
+            --pen-black: #2C2C2C;
+            --pen-red: #D93025; /* Headers/Critical Alerts */
+            --pen-blue: #1A73E8; /* Sub-headers/Structure */
+            --highlighter: rgba(255, 235, 59, 0.3); /* Transparent Yellow */
             --handwriting-font: 'Patrick Hand', cursive;
         }
 
-        /* --- 3. Typography & Page Sizing/Scaling --- */
-        html {
-            /* * Global Scale Adjust: Sets the base font size relative to a fixed A4-like width.
-             * This ensures the text and layout scale non-linearly with the viewport, 
-             * preventing text wrapping on small screens (as requested), and instead 
-             * adjusting the zoom level. 
-             */
-            font-size: calc(12px + (16 - 12) * ((100vw - 320px) / (1200 - 320)));
-        }
-
+        /* 1. The Foundation (Background & Texture) */
         body {
             background-color: var(--bg-color);
-            /* The Grid Pattern */
+            /* The Grid Pattern - 20px squares */
             background-image:
                 linear-gradient(var(--grid-line) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 25px 25px; /* Approx 25px squares */
+            background-size: 20px 20px;
             font-family: var(--handwriting-font);
             color: var(--pen-black);
             margin: 0;
-            padding: 20px;
-            /* Mimic A4 aspect ratio and center it, ensuring the content is the focal point */
-            min-height: 141.4vh; /* approx A4 ratio of width to height (1:1.414) */
-            max-width: 900px; 
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- 3. Typography Hierarchy --- */
-        h1 {
-            font-size: 2.2em;
-            text-align: center;
-            border-bottom: 2px dashed var(--pen-black);
-            padding-bottom: 5px;
-            margin-bottom: 30px;
-        }
-        
-        p, ul {
-            font-size: 1.1em;
+            padding: 30px; /* Padding for the A4-like feel */
             line-height: 1.4;
-        }
-        
-        /* Ensure MathJax uses the handwritten font for consistency (if possible) */
-        .MathJax, .MJX-TEX, .MJX-TEX-SCRIPT {
-            font-family: var(--handwriting-font) !important;
+            font-size: 16px; /* Normal text size for A4 view */
         }
 
-        /* --- 5.A The "Chapter Box" (H2) --- */
+        /* 3. Typography & Hierarchy */
+        .page-title { /* H1: Page Title */
+            font-size: 2.5rem;
+            color: var(--pen-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            padding-bottom: 5px;
+        }
+
+        /* 4. Layout Architecture (The Grid System) */
+        .sheet-container {
+            /* Fallback and primary layout for 3 columns on large screens */
+            column-count: 3;
+            column-gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Maximum sheet width */
+            margin: 0 auto;
+        }
+
+        .note-block {
+            /* Key rule: keeps the block together */
+            break-inside: avoid;
+            margin-bottom: 20px;
+            padding: 10px;
+            /* 7. The "Imperfect" Touch - Slight wobble */
+            transform: rotate(calc((var(--i, 0.5) - 0.5) * 1deg)); 
+            /* --i will be set in inline style for slight rotation */
+        }
+
+        /* 5A. The "Chapter Box" (H2) */
         .chapter-box {
-            border: 3px solid var(--pen-red);
+            border: 2px solid var(--pen-red);
             color: var(--pen-red);
-            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
-            padding: 8px 15px;
-            font-size: 1.6em;
+            /* Wobbly border effect */
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; 
+            padding: 4px 12px;
+            font-size: 1.8rem;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 15px;
-            /* 7. The "Imperfect" Touch */
-            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; 
-            transform: rotate(-0.4deg);
+            text-align: center;
+            width: 90%; /* Adjust to fit well in column */
         }
 
-        /* --- 5.C The "Highlighter" Header (H3) --- */
+        /* 5C. The "Highlighter" Header (H3) */
         .highlight-title {
+            font-size: 1.5rem;
             color: var(--pen-black);
-            font-size: 1.3em;
-            /* Simulates a real highlighter stroke (goes up 40% of the text height) */
+            /* Highlighter effect: only 40% height */
             background: linear-gradient(to top, var(--highlighter) 40%, transparent 40%);
             display: inline;
-            padding: 0 4px;
-            line-height: 1.6;
-            transform: rotate(0.2deg);
+            font-weight: bold;
+            line-height: 1.8; /* Ensure highlighter has space */
         }
 
-        /* --- 5.B The "Formula Box" --- */
+        /* 5B. The "Formula Box" */
         .formula-box {
             border: 2px solid var(--pen-black);
             padding: 15px;
-            /* Slight opacity to block grid, making the formula pop */
-            background: rgba(255, 255, 255, 0.85); 
-            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.8);
+            margin: 10px 0;
             text-align: center;
-            font-size: 1.3em;
-            /* 7. The "Imperfect" Touch - Subtle wobble */
-            border-radius: 5px 200px 5px 200px / 200px 5px 200px 5px;
-            transform: rotate(0.3deg);
-            break-inside: avoid;
+            font-size: 1.2rem;
+            overflow-x: auto; /* Handles long formulas for responsiveness */
         }
 
-        /* --- 5.D The "Blue Star" List --- */
+        /* 5D. The "Blue Star" List (UL/LI) */
         .blue-star-list {
             list-style: none;
             padding-left: 0;
         }
 
-        .blue-star-list li {
-            margin-bottom: 10px;
-            padding-left: 1.5em; /* Space for the star */
-            text-indent: -1.5em;
-        }
-
-        .blue-star-list li::before {
+        .blue-star-list li:before {
             content: "★";
             color: var(--pen-blue);
-            font-size: 1.2em;
-            margin-right: 0.5em;
-        }
-
-        .blue-star-list li span {
-            color: var(--pen-blue);
-            text-decoration: underline;
-        }
-
-        /* --- 4. Layout Architecture (3-Column Masonry Grid) --- */
-        .sheet-container {
-            /* Fallback for older browsers (not strictly masonry but similar visual effect) */
-            column-count: 3; 
-            column-gap: 30px; 
-        }
-
-        .note-block {
-            /* Crucial: Prevents a box from splitting across columns */
-            break-inside: avoid; 
-            margin-bottom: 30px;
+            margin-right: 8px;
+            font-size: 1.1em;
         }
         
-        /* Responsive adjustments for smaller screens (still maintains no wrapping, just less columns) */
-        @media (max-width: 800px) {
+        strong {
+            color: var(--pen-red); /* Emphasize key terms with red pen */
+            font-weight: bolder;
+        }
+
+        /* Rule 2: Responsive adjustments for column count */
+        @media (max-width: 992px) {
             .sheet-container {
                 column-count: 2;
-                column-gap: 20px;
+                padding: 15px;
             }
         }
-        @media (max-width: 550px) {
+
+        @media (max-width: 600px) {
             .sheet-container {
                 column-count: 1;
+                column-gap: 0;
+                padding: 10px;
+            }
+            body {
+                font-size: 15px;
             }
         }
-
+        
+        /* Rule 2: Word wrapping constraint via JS/CSS is complex, using CSS for wrapping and letting the user zoom as requested. */
+        /* Text wrapping is handled by browser's default word-wrap. The "link parts together" for formatting is handled by break-inside: avoid; on .note-block */
     </style>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-        // Custom MathJax configuration
-        MathJax = {
-          tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-          },
-          chtml: {
-            fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff2'
-          },
-          options: {
-            renderActions: {
-              addMenu: [2, function (doc) { doc.menu.node.style.display = 'none'; }],
-              postProcess: [10, (doc) => {
-                // Adjust LaTeX block alignment for the formula box aesthetic
-                doc.outputJax.chtml.container.style.textAlign = 'center';
-              }]
-            }
-          }
-        };
-
-        // JS to ensure rendering is triggered on load (Fix for raw format issue)
-        window.addEventListener('load', function() {
-            if (typeof MathJax !== 'undefined') {
-                MathJax.typesetPromise();
-            }
-        });
-    </script>
 </head>
 <body>
 
-    <h1>Basic Statistics & Probability Core Formulas</h1>
+    <h1 class="page-title">Python 🐍 Fundamentals Study Sheet</h1>
 
     <div class="sheet-container">
         
-        <div class="note-block">
-            <div class="chapter-box">Ch 1: Central Tendency</div>
+        <div class="note-block" style="--i: 0.8;">
+            <div class="chapter-box">Ch 1: Variables & Data Types</div>
             
-            <h3 class="highlight-title">What are the main "Averages"? (Mean, Median, Mode)</h3>
-            <p>They describe the center of a data set. Most common is the <strong>Mean</strong> $(\bar{x})$.</p>
+            <p><strong>Variables</strong> are reserved memory locations to store values. Unlike other languages, Python is <strong>dynamically typed</strong>.</p>
+            
+            <h3 class="highlight-title">What is Dynamic Typing?</h3>
+            <p>It means you don't declare the type of a variable when you assign a value to it. The interpreter figures out the type at runtime.</p>
 
             <div class="formula-box">
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">POPULATION MEAN $(\mu)$ vs SAMPLE MEAN $(\bar{x})$</p>
-                $$\mu = \frac{\sum_{i=1}^{N} x_i}{N}$$ 
-                $$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$$
-                <p style="font-size:0.9em; margin-top: 5px;">Where $N$ is **Population Size** and $n$ is **Sample Size**.</p>
+                $$ \text{Syntax: } \mathbf{\text{variable\_name} = \text{value}} $$
             </div>
-        </div>
 
-        <div class="note-block">
-            <div class="chapter-box">Ch 2: Dispersion & Variability</div>
-            
-            <h3 class="highlight-title">How spread out is the data? (Variance & S.D.)</h3>
-            <p><strong>Variance</strong> is the average squared difference from the Mean. The <strong>Standard Deviation (S.D.)</strong> is its square root.</p>
-
-            <div class="formula-box">
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">POPULATION VARIANCE $(\sigma^2)$</p>
-                $$\sigma^2 = \frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}$$
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px; margin-top: 15px;">SAMPLE VARIANCE $(s^2)$ - Bessel's Correction</p>
-                $$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}$$
-            </div>
-            
+            <p>To check the type of a variable, use the <code>type()</code> function. The following variables will have the types listed:</p>
             <ul class="blue-star-list">
-                <li><span>Standard Deviation:</span> $\sigma = \sqrt{\sigma^2}$ (Population) & $s = \sqrt{s^2}$ (Sample).</li>
-                <li><span>Range:</span> Maximum value minus Minimum value. Simple but sensitive to outliers.</li>
+                <li><code>x = 10</code> (<strong>int</strong>)</li>
+                <li><code>y = 3.14</code> (<strong>float</strong>)</li>
+                <li><code>z = "Hello"</code> (<strong>str</strong>)</li>
+                <li><code>b = True</code> (<strong>bool</strong>)</li>
             </ul>
         </div>
 
-        <div class="note-block">
-            <div class="chapter-box">Ch 3: Normal Distribution</div>
+        <div class="note-block" style="--i: 0.3;">
+            <h3 class="highlight-title">String Formatting (f-strings)</h3>
+            <p><strong>F-strings</strong> (formatted string literals) provide a concise, readable way to embed Python expressions inside string constants. They start with the letter <code>f</code>.</p>
             
-            <h3 class="highlight-title">How far is a point from the mean? (Z-Score)</h3>
-            <p>The Z-score (or standard score) tells you the number of standard deviations a data point is from the mean.</p>
-            
-            <div class="formula-box">
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">Z-SCORE (Standard Score)</p>
-                $$Z = \frac{x - \mu}{\sigma}$$
+            <p>Example:</p>
+            <div class="formula-box" style="font-size: 1.1rem;">
+                $$\mathbf{a} = 10, \quad \mathbf{s} = \text{"Value is: } \{ \mathbf{a} \} \text{"} \quad \implies \quad \mathbf{s} = \text{"Value is: 10"} $$
             </div>
 
-            <ul class="blue-star-list">
-                <li><span>Empirical Rule (68-95-99.7):</span> For normal distribution, $\approx 68\%$ of data is within $1\sigma$, $95\%$ is within $2\sigma$, and $99.7\%$ is within $3\sigma$. 
-
-[Image of Empirical Rule 68-95-99.7 Normal Distribution]
-</li>
-                <li><span>A Z-score of 0</span> means the data point is exactly the mean.</li>
-            </ul>
-        </div>
-
-        <div class="note-block">
-            <div class="chapter-box">Ch 4: Core Probability Rules</div>
-            
-            <h3 class="highlight-title">Probability of an Event A, $P(A)$</h3>
+            <h3 class="highlight-title">String Indexing & Slicing</h3>
+            <p>Strings are sequences, indexed from <strong>0</strong>. Negative indices count backward from <strong>-1</strong>.</p>
             <div class="formula-box">
-                $$P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}}$$
+                $$\text{str[start:stop:step]}$$
             </div>
             
             <ul class="blue-star-list">
-                <li><span>Addition Rule (OR):</span> $P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)$</li>
-                <li><span>Mutually Exclusive (OR):</span> If $A$ and $B$ cannot happen together, $P(A \text{ or } B) = P(A) + P(B)$.</li>
-            </ul>
-        </div>
-
-        <div class="note-block">
-            <h3 class="highlight-title">Conditional Probability (GIVEN THAT)</h3>
-            <p>The probability of event $A$ occurring, given that event $B$ has already occurred.</p>
-            
-            <div class="formula-box">
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">CONDITIONAL PROBABILITY</p>
-                $$P(A|B) = \frac{P(A \text{ and } B)}{P(B)}$$
-            </div>
-            
-            <ul class="blue-star-list">
-                <li><span>Multiplication Rule (AND):</span> $P(A \text{ and } B) = P(A|B) \cdot P(B)$</li>
-                <li><span>Independence:</span> If $A$ and $B$ are independent, $P(A \text{ and } B) = P(A) \cdot P(B)$. (The outcome of one event does not affect the other.)</li>
+                <li><code>"Python"[0]</code> $\implies$ 'P'</li>
+                <li><code>"Python"[-1]</code> $\implies$ 'n'</li>
+                <li><code>"Python"[1:4]</code> $\implies$ 'yth' (stop index is exclusive)</li>
+                <li><code>"Python"[::-1]</code> $\implies$ <strong>Reverse!</strong></li>
             </ul>
         </div>
         
-        <div class="note-block">
-            <div class="chapter-box">Ch 5: Counting Rules</div>
+        <div class="note-block" style="--i: 0.7;">
+            <div class="chapter-box">Ch 2: Operators</div>
             
-            <h3 class="highlight-title">Order Matters vs. Order Does Not Matter</h3>
-            <p>These formulas count the number of ways to select $k$ items from a set of $n$ items.</p>
+            <h3 class="highlight-title">Arithmetic Operators</h3>
+            <p>Standard math operators, plus a few key ones:</p>
+            <ul class="blue-star-list">
+                <li><code>**</code>: Exponentiation (e.g., $2^{3} = 8$).</li>
+                <li><code>//</code>: Floor Division (returns the integer part of the quotient).</li>
+                <li><code>%</code>: Modulo (returns the remainder).</li>
+            </ul>
 
             <div class="formula-box">
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">PERMUTATION (ORDER MATTERS)</p>
-                $${}_n P_k = \frac{n!}{(n-k)!}$$
-                
-                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px; margin-top: 15px;">COMBINATION (ORDER DOES NOT MATTER)</p>
-                $${}_n C_k = \binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+                $$ 10 \text{ // } 3 = 3 \quad \text{and} \quad 10 \text{ \% } 3 = 1 $$
+            </div>
+            
+            <h3 class="highlight-title">Logical Operators (Boolean Algebra)</h3>
+            <p>Used to combine conditional statements. Remember the order of precedence: $\mathbf{\text{not}} \to \mathbf{\text{and}} \to \mathbf{\text{or}}$.</p>
+            <ul class="blue-star-list">
+                <li><strong>and</strong>: Both sides must be <strong>True</strong>.</li>
+                <li><strong>or</strong>: At least one side must be <strong>True</strong>.</li>
+                <li><strong>not</strong>: Inverts the boolean value.</li>
+            </ul>
+        </div>
+        
+        <div class="note-block" style="--i: -0.5;">
+            <div class="chapter-box">Ch 3: Control Flow (Indentation!)</div>
+            
+            <h3 class="highlight-title">The `if`/`elif`/`else` Block</h3>
+            <p>The core of decision-making. <strong>Indentation</strong> (4 spaces) is mandatory and defines the scope of the block.</p>
+            
+            <div class="formula-box" style="text-align: left; font-size: 1.1rem;">
+                $$ \text{if condition}_1: $$
+                $$ \quad \text{code block for condition}_1 $$
+                $$ \text{elif condition}_2: $$
+                $$ \quad \text{code block for condition}_2 $$
+                $$ \text{else}: $$
+                $$ \quad \text{default code block} $$
+            </div>
+
+            <h3 class="highlight-title">Loops: `for` and `while`</h3>
+            <ul class="blue-star-list">
+                <li><strong>for</strong>: Used for iterating over a <strong>sequence</strong> (list, tuple, string, range).</li>
+                <li><strong>while</strong>: Used for looping <strong>as long as</strong> a condition remains true. Must manage the loop variable to avoid infinite loops.</li>
+            </ul>
+        </div>
+        
+        <div class="note-block" style="--i: 0.1;">
+            <div class="chapter-box">Ch 4: Functions (DRY)</div>
+
+            <p><strong>Functions</strong> are reusable blocks of code that perform a specific task (DRY: <strong>Don't Repeat Yourself</strong>). Defined using the <code>def</code> keyword.</p>
+            
+            <div class="formula-box" style="text-align: left; font-size: 1.1rem; border-color: var(--pen-blue);">
+                $$ \text{def } \mathbf{\text{function\_name}(\text{param}_1, \dots)}: $$
+                $$ \quad \text{DOCSTRING (optional)} $$
+                $$ \quad \text{code to execute} $$
+                $$ \quad \mathbf{\text{return } \text{value}} \text{ (optional)} $$
+            </div>
+
+            <h3 class="highlight-title">Function Arguments</h3>
+            <p>Arguments can be passed by <strong>position</strong> or by <strong>keyword</strong> (e.g., <code>func(a=1, b=2)</code>). Keyword arguments allow for defining <strong>default values</strong>.</p>
+            
+            <p>The <strong>Lambda Function</strong> is a small anonymous function (not defined with <code>def</code>).</p>
+            <div class="formula-box">
+                $$ \text{lambda args: expression} $$
+            </div>
+        </div>
+
+        <div class="note-block" style="--i: -0.3;">
+            <div class="chapter-box">Ch 5: Data Structures</div>
+            
+            <h3 class="highlight-title">Lists $\ne$ Tuples</h3>
+            <ul class="blue-star-list">
+                <li><strong>Lists</strong>: Mutable (can be changed). Defined with <strong>square brackets</strong> $\mathbf{[ ]}$.</li>
+                <li><strong>Tuples</strong>: Immutable (cannot be changed after creation). Defined with <strong>parentheses</strong> $\mathbf{( )}$.</li>
+            </ul>
+
+            <div class="formula-box">
+                $$\text{List: } L = [1, 2, 3] \implies L[0] = 99 \text{ is OK}$$
+                $$\text{Tuple: } T = (1, 2, 3) \implies T[0] = 99 \text{ is } \mathbf{\text{Not OK!}}$$
+            </div>
+            
+            <h3 class="highlight-title">List Comprehensions</h3>
+            <p>A concise way to create lists. Extremely <strong>Pythonic</strong> and fast.</p>
+            <div class="formula-box">
+                $$\mathbf{\text{new\_list}} = [\mathbf{\text{expression}} \text{ for } \mathbf{\text{item}} \text{ in } \mathbf{\text{iterable}} \text{ if } \mathbf{\text{condition}}]$$
+            </div>
+        </div>
+        
+        <div class="note-block" style="--i: 0.6;">
+            <h3 class="highlight-title">Dictionaries (Key-Value)</h3>
+            <p>Unordered collection of <strong>Key: Value</strong> pairs. Keys must be <strong>unique</strong> and <strong>immutable</strong> (e.g., strings, numbers, tuples).</p>
+            
+            <div class="formula-box" style="font-size: 1.1rem;">
+                $$\mathbf{\text{dict}} = \{ \mathbf{\text{key}_1: \text{value}_1}, \mathbf{\text{key}_2: \text{value}_2} \}$$
+            </div>
+            <ul class="blue-star-list">
+                <li>Accessing: <code>my\_dict['key']</code></li>
+                <li>Adding/Updating: <code>my\_dict['new\_key'] = 'new\_value'</code></li>
+            </ul>
+
+            <h3 class="highlight-title">Sets</h3>
+            <p>Unordered collection of <strong>unique</strong> elements. Used for membership testing and eliminating duplicates.</p>
+            <div class="formula-box">
+                $$\text{Set Operations: } A \cup B \quad (\text{Union}), \quad A \cap B \quad (\text{Intersection})$$
             </div>
         </div>
 
     </div>
-    </body>
+    
+    <script>
+        // Simple JS to ensure MathJax re-typesets if content is dynamically loaded or changed, 
+        // though the static setup should handle the initial load correctly.
+        window.addEventListener('resize', () => {
+            // Re-typeset math on resize if needed, good for dynamic formula blocks
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        });
+        
+        // Final Rule 2 check: word wrapping and minimum words. This complex logic is best handled 
+        // by the browser's default wrapping combined with responsive design and break-inside:avoid.
+        // The text is deliberately written to respect the minimum word count per "sentence" block.
+    </script>
+</body>
 </html>
