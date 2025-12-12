@@ -3,1251 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Elements Guide</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Basic Statistics Study Notes - The Foundation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
+        /* --- 1. The Foundation (Background & Texture) & 2. Color Palette --- */
         :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #334155;
-            --bg-accent: #475569;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-accent: #60a5fa;
-            --accent-color: #f472b6;
-            --accent-secondary: #c084fc;
-            --border-color: #475569;
-            --border-radius: 16px;
-            --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            --transition: all 0.3s ease;
-            --section-gap: 40px;
+            /* Cream Paper Background & Grid */
+            --bg-color: #FDFCF5; /* Off-white, creamy beige */
+            --grid-line: #D0D4E0; /* Faint light gray/blue */
+            /* Pen Colors */
+            --pen-black: #2C2C2C; /* Deep Charcoal (Primary Text) */
+            --pen-red: #D93025; /* Standard Red Ballpoint (Chapter/Alerts) */
+            --pen-blue: #1A73E8; /* Royal Blue (Sub-headers/Structure) */
+            --highlighter: rgba(255, 235, 59, 0.3); /* Semi-transparent Yellow (Questions) */
+            /* Typography */
+            --handwriting-font: 'Patrick Hand', cursive;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- 3. Typography & Page Sizing/Scaling --- */
+        html {
+            /* * Global Scale Adjust: Sets the base font size relative to a fixed A4-like width.
+             * This ensures the text and layout scale non-linearly with the viewport, 
+             * preventing text wrapping on small screens (as requested), and instead 
+             * adjusting the zoom level. 
+             */
+            font-size: calc(12px + (16 - 12) * ((100vw - 320px) / (1200 - 320)));
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--text-primary);
-            background-color: var(--bg-primary);
-            padding-bottom: 50px;
-            background-image: radial-gradient(circle at 20% 30%, rgba(30, 41, 59, 0.8) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 80%, rgba(71, 85, 105, 0.6) 0%, transparent 50%);
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            /* The Grid Pattern */
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 25px 25px; /* Approx 25px squares */
+            font-family: var(--handwriting-font);
+            color: var(--pen-black);
+            margin: 0;
+            padding: 20px;
+            /* Mimic A4 aspect ratio and center it, ensuring the content is the focal point */
+            min-height: 141.4vh; /* approx A4 ratio of width to height (1:1.414) */
+            max-width: 900px; 
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .container {
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            padding: 25px 0;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
-        }
-
-        .header-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* --- 3. Typography Hierarchy --- */
+        h1 {
+            font-size: 2.2em;
             text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo i {
-            color: var(--accent-color);
-            background: rgba(96, 165, 250, 0.1);
-            padding: 15px;
-            border-radius: 50%;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        /* Language Toggle */
-        .language-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .language-toggle {
-                position: relative;
-                top: 0;
-                right: 0;
-                margin-bottom: 20px;
-            }
-        }
-
-        .lang-btn {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 2px solid var(--border-color);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .lang-btn:hover {
-            background: var(--bg-accent);
-        }
-
-        .lang-btn.active {
-            background: var(--accent-color);
-            border-color: var(--accent-color);
-            color: white;
-        }
-
-        .lang-btn.urdu {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-weight: 600;
-        }
-
-        /* Navigation */
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
-            background: var(--bg-secondary);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .tab-btn {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            flex: 1;
-            min-width: 180px;
-            border: 1px solid transparent;
-        }
-
-        .tab-btn:hover {
-            background: var(--bg-accent);
-            transform: translateY(-2px);
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
-            color: white;
-            box-shadow: 0 5px 15px rgba(244, 114, 182, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Main Content */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-            margin-top: var(--section-gap);
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--text-primary);
+            border-bottom: 2px dashed var(--pen-black);
+            padding-bottom: 5px;
             margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        }
+        
+        p, ul {
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+        
+        /* Ensure MathJax uses the handwritten font for consistency (if possible) */
+        .MathJax, .MJX-TEX, .MJX-TEX-SCRIPT {
+            font-family: var(--handwriting-font) !important;
         }
 
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+        /* --- 5.A The "Chapter Box" (H2) --- */
+        .chapter-box {
+            border: 3px solid var(--pen-red);
+            color: var(--pen-red);
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            padding: 8px 15px;
+            font-size: 1.6em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            /* 7. The "Imperfect" Touch */
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; 
+            transform: rotate(-0.4deg);
         }
 
-        .section-icon {
-            color: var(--accent-color);
-            background: rgba(244, 114, 182, 0.1);
-            padding: 12px;
-            border-radius: 12px;
+        /* --- 5.C The "Highlighter" Header (H3) --- */
+        .highlight-title {
+            color: var(--pen-black);
+            font-size: 1.3em;
+            /* Simulates a real highlighter stroke (goes up 40% of the text height) */
+            background: linear-gradient(to top, var(--highlighter) 40%, transparent 40%);
+            display: inline;
+            padding: 0 4px;
+            line-height: 1.6;
+            transform: rotate(0.2deg);
         }
 
-        .section-intro {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            line-height: 1.8;
-            background: var(--bg-secondary);
-            padding: 25px;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--accent-color);
-        }
-
-        /* Cards */
-        .elements-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-bottom: var(--section-gap);
-        }
-
-        @media (min-width: 768px) {
-            .elements-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1100px) {
-            .elements-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .element-card {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .element-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent-color);
-        }
-
-        .card-header {
-            padding: 25px;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            width: 70px;
-            height: 70px;
-            background: rgba(96, 165, 250, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-accent);
-            flex-shrink: 0;
-        }
-
-        .card-title {
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .card-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .card-body {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-section {
-            margin-bottom: 25px;
-        }
-
-        .card-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-label {
-            font-weight: 700;
-            color: var(--text-accent);
-            margin-bottom: 10px;
-            display: block;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Definition Box */
-        .definition-box {
-            background: rgba(30, 41, 59, 0.8);
-            border-left: 4px solid var(--text-accent);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 0 12px 12px 0;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* Examples */
-        .example-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-
-        .example-item:hover {
-            border-color: var(--accent-color);
-            background: rgba(30, 41, 59, 0.9);
-        }
-
-        .example-title {
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-        }
-
-        .example-title i {
-            color: var(--accent-color);
-        }
-
-        .example-desc {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .urdu-example {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            direction: rtl;
-            text-align: right;
-        }
-
-        /* Advanced Elements */
-        .advanced-section {
-            margin-top: var(--section-gap);
-        }
-
-        .advanced-card {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            margin-bottom: 35px;
-            border: 1px solid var(--border-color);
-            border-top: 5px solid var(--accent-secondary);
-        }
-
-        .advanced-card .card-header {
-            background: linear-gradient(135deg, #3730a3, #5b21b6);
-        }
-
-        /* Summary Section */
-        .summary-section {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-top: var(--section-gap);
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .summary-item {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .summary-item:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-5px);
-        }
-
-        .summary-label {
-            font-weight: 800;
-            color: var(--text-accent);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-
-        /* Urdu Typography */
-        .urdu-text {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            direction: rtl;
-            text-align: right;
-        }
-
-        .urdu-text .section-title {
-            justify-content: flex-end;
-        }
-
-        /* Footer */
-        footer {
+        /* --- 5.B The "Formula Box" --- */
+        .formula-box {
+            border: 2px solid var(--pen-black);
+            padding: 15px;
+            /* Slight opacity to block grid, making the formula pop */
+            background: rgba(255, 255, 255, 0.85); 
+            margin: 15px 0;
             text-align: center;
-            margin-top: 60px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
+            font-size: 1.3em;
+            /* 7. The "Imperfect" Touch - Subtle wobble */
+            border-radius: 5px 200px 5px 200px / 200px 5px 200px 5px;
+            transform: rotate(0.3deg);
+            break-inside: avoid;
         }
 
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2rem;
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
+        /* --- 5.D The "Blue Star" List --- */
+        .blue-star-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .blue-star-list li {
+            margin-bottom: 10px;
+            padding-left: 1.5em; /* Space for the star */
+            text-indent: -1.5em;
+        }
+
+        .blue-star-list li::before {
+            content: "★";
+            color: var(--pen-blue);
+            font-size: 1.2em;
+            margin-right: 0.5em;
+        }
+
+        .blue-star-list li span {
+            color: var(--pen-blue);
+            text-decoration: underline;
+        }
+
+        /* --- 4. Layout Architecture (3-Column Masonry Grid) --- */
+        .sheet-container {
+            /* Fallback for older browsers (not strictly masonry but similar visual effect) */
+            column-count: 3; 
+            column-gap: 30px; 
+        }
+
+        .note-block {
+            /* Crucial: Prevents a box from splitting across columns */
+            break-inside: avoid; 
+            margin-bottom: 30px;
+        }
+        
+        /* Responsive adjustments for smaller screens (still maintains no wrapping, just less columns) */
+        @media (max-width: 800px) {
+            .sheet-container {
+                column-count: 2;
+                column-gap: 20px;
             }
-            
-            .section-title {
-                font-size: 1.8rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .tab-btn {
-                min-width: 100%;
-            }
-            
-            .card-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .card-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.7rem;
-            }
-            
-            .summary-section {
-                padding: 25px;
-            }
-            
-            .language-toggle {
-                position: relative;
-                margin-bottom: 20px;
-                justify-content: center;
+        }
+        @media (max-width: 550px) {
+            .sheet-container {
+                column-count: 1;
             }
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .nav-tabs {
-                padding: 12px;
-            }
-            
-            .tab-btn {
-                padding: 10px 15px;
-                font-size: 0.95rem;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            .summary-section {
-                padding: 20px;
-            }
-            
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-book-open"></i>
-                    <h1 class="eng-text">Story Elements Guide</h1>
-                    <h1 class="urdu-text" style="display: none">کہانی کے عناصر کا رہنما</h1>
-                </div>
-                
-                <div class="language-toggle">
-                    <button class="lang-btn active eng-btn" data-lang="en">
-                        <i class="fas fa-globe-americas"></i> English
-                    </button>
-                    <button class="lang-btn urdu urdu-btn" data-lang="ur">
-                        <i class="fas fa-mosque"></i> اردو
-                    </button>
-                </div>
-                
-                <p class="tagline eng-text">A comprehensive guide to understanding the building blocks of great stories, from basic elements to advanced techniques.</p>
-                <p class="tagline urdu-text" style="display: none; font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; text-align: right">
-                    شاندار کہانیوں کے بنیادی اجزاء کو سمجھنے کا ایک جامع رہنما، بنیادی عناصر سے لے کر اعلیٰ تکنیکوں تک۔
-                </p>
-                
-                <div class="nav-tabs">
-                    <button class="tab-btn active" data-tab="essential">
-                        <span class="eng-text">Essential Elements</span>
-                        <span class="urdu-text" style="display: none">بنیادی عناصر</span>
-                    </button>
-                    <button class="tab-btn" data-tab="advanced">
-                        <span class="eng-text">Advanced Elements</span>
-                        <span class="urdu-text" style="display: none">اعلیٰ درجے کے عناصر</span>
-                    </button>
-                    <button class="tab-btn" data-tab="summary">
-                        <span class="eng-text">Quick Summary</span>
-                        <span class="urdu-text" style="display: none">جلد مرور</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <!-- Essential Elements Section -->
-        <section id="essential" class="content-section active">
-            <h2 class="section-title">
-                <i class="fas fa-cube section-icon"></i>
-                <span class="eng-text">The 5 Essential Story Elements</span>
-                <span class="urdu-text" style="display: none">کہانی کے 5 بنیادی عناصر</span>
-            </h2>
-            
-            <p class="section-intro eng-text">These are the foundational building blocks that every story needs to exist. Think of them as the essential ingredients in a recipe.</p>
-            <p class="section-intro urdu-text" style="display: none; font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; text-align: right">
-                یہ وہ بنیادی تعمیری بلاکس ہیں جن کی ہر کہانی کو وجود میں آنے کے لیے ضرورت ہوتی ہے۔ انہیں کسی ترکیب کے لازمی اجزاء کے طور پر سوچیں۔
-            </p>
-            
-            <div class="elements-grid">
-                <!-- Setting Card -->
-                <div class="element-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Setting</h3>
-                            <h3 class="card-title urdu-text" style="display: none">ترتیب</h3>
-                            <p class="card-subtitle eng-text">The "where and when"</p>
-                            <p class="card-subtitle urdu-text" style="display: none">"کہاں اور کب"</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The world in which the story takes place. It includes the location, time period, weather, social conditions, and atmosphere.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                وہ دنیا جس میں کہانی واقع ہوتی ہے۔ اس میں مقام، وقت کا دور، موسم، معاشرتی حالات اور فضا شامل ہیں۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Why it matters:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیوں اہم ہے:</span>
-                            <p class="eng-text">Creates mood, influences characters, and makes the story feel real and immersive.</p>
-                            <p class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                                موڈ بناتا ہے، کرداروں کو متاثر کرتا ہے، اور کہانی کو حقیقی اور مشغول کن بناتا ہے۔
-                            </p>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-star"></i>
-                                    Hogwarts in Harry Potter
-                                </div>
-                                <p class="example-desc">A magical castle with moving staircases, secret rooms, and enchanted grounds that becomes a character in itself.</p>
-                            </div>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-star"></i>
-                                    19th Century London in Sherlock Holmes
-                                </div>
-                                <p class="example-desc">Foggy streets, gas lamps, and horse-drawn carriages create a mysterious atmosphere perfect for detective stories.</p>
-                            </div>
-                            
-                            <!-- Urdu/Pakistan Example -->
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-star"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">لاہور کی پرانی بستی "بنگا منڈی"</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    تنگ گلیاں، لکڑی کے پرانے دروازے، کبوتروں کی اڑان اور شام کی چائے کی محفلیں جو عمران سیریز کی کہانیوں کو جیتا جاگتا ماحول دیتی ہیں۔
-                                </p>
-                            </div>
-                            
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-star"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">کشمیر کا پہاڑی علاقہ</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    برف سے ڈھکی چوٹیاں، شفاف جھیلیں، دیودار کے جنگلات اور مقامی لوگوں کی سادہ زندگی جو مثنوی "سفرِ کشمیر" کا مرکزی حصہ ہے۔
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Characters Card -->
-                <div class="element-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Characters</h3>
-                            <h3 class="card-title urdu-text" style="display: none">کردار</h3>
-                            <p class="card-subtitle eng-text">The "who"</p>
-                            <p class="card-subtitle urdu-text" style="display: none">"کون"</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The people (or animals, creatures) who experience the story. They drive the plot through their actions and decisions.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                وہ لوگ (یا جانور، مخلوقات) جو کہانی کا تجربہ کرتے ہیں۔ وہ اپنے اعمال اور فیصلوں کے ذریعے پلاٹ کو آگے بڑھاتے ہیں۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Types:</span>
-                            <span class="section-label urdu-text" style="display: none">اقسام:</span>
-                            <div class="eng-text">
-                                <p><strong>Protagonist:</strong> The main character we follow (e.g., Luke Skywalker).</p>
-                                <p><strong>Antagonist:</strong> The force or person opposing the protagonist (e.g., Darth Vader).</p>
-                                <p><strong>Supporting Characters:</strong> Help develop the protagonist and plot (e.g., Hermione Granger).</p>
-                            </div>
-                            <div class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                                <p><strong>مرکزی کردار:</strong> وہ اہم کردار جس کا ہم پیچھا کرتے ہیں (مثلاً، اندر سریاست کی کہانیوں کا سورج)</p>
-                                <p><strong>مخالف کردار:</strong> وہ قوت یا شخص جو مرکزی کردار کی مخالفت کرتا ہے (مثلاً، میرے پاس تمہارے لیے کہانی میں نظام الدین)</p>
-                                <p><strong>معاون کردار:</strong> مرکزی کردار اور پلاٹ کی ترقی میں مدد کرتے ہیں (مثلاً، افسانہ "لیلیٰ مجنوں" کی والدہ)</p>
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-user-circle"></i>
-                                    Elizabeth Bennet in Pride and Prejudice
-                                </div>
-                                <p class="example-desc">A strong-willed, intelligent protagonist whose personal growth and changing perceptions drive the story.</p>
-                            </div>
-                            
-                            <!-- Urdu/Pakistan Example -->
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-user-circle"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">میرے پاس تمہارے لیے کہانی کا "عارف"</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    ایک نوجوان جو اپنی بے روزگاری، خاندانی ذمہ داریوں اور معاشرتی دباؤ کے درمیان اپنی شناخت تلاش کرتا ہے، جو پاکستانی نوجوانوں کی عمومی کشمکش کو ظاہر کرتا ہے۔
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Conflict Card -->
-                <div class="element-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-crosshairs"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Conflict</h3>
-                            <h3 class="card-title urdu-text" style="display: none">تصادم</h3>
-                            <p class="card-subtitle eng-text">The "problem"</p>
-                            <p class="card-subtitle urdu-text" style="display: none">"مسئلہ"</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The main problem or struggle that the protagonist faces. No conflict = no story.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                وہ بنیادی مسئلہ یا جدوجہد جس کا سامنا مرکزی کردار کو کرنا پڑتا ہے۔ تصادم کے بغیر = کوئی کہانی نہیں۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Types:</span>
-                            <span class="section-label urdu-text" style="display: none">اقسام:</span>
-                            <div class="eng-text">
-                                <p><strong>Man vs. Man:</strong> Harry Potter vs. Voldemort</p>
-                                <p><strong>Man vs. Self:</strong> Hamlet's internal struggle</p>
-                                <p><strong>Man vs. Society:</strong> Katniss vs. the Capitol</p>
-                                <p><strong>Man vs. Nature:</strong> Survival in Life of Pi</p>
-                            </div>
-                            <div class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                                <p><strong>انسان بمقابلہ انسان:</strong> شہزادہ ہمایوں اور شیر شاہ سوری</p>
-                                <p><strong>انسان بمقابلہ خود:</strong> کلیاتِ اقبال میں نفس کے ساتھ جدوجہد</p>
-                                <p><strong>انسان بمقابلہ معاشرہ:</strong> صنعت ناگی کی کہانیوں میں روایات کے خلاف بغاوت</p>
-                                <p><strong>انسان بمقابلہ فطرت:</strong> سندھ کے سیلاب میں بقا کی جدوجہد</p>
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-fire-alt"></i>
-                                    The Hunger Games
-                                </div>
-                                <p class="example-desc">Katniss must survive a deadly competition while also fighting against an oppressive government system.</p>
-                            </div>
-                            
-                            <!-- Urdu/Pakistan Example -->
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-fire-alt"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">ناول "خاک نشین"</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    کسانوں کی زمینداروں کے خلاف جدوجہد، جس میں وہ اپنے حقوق کے لیے لڑتے ہیں اور سماجی ناانصافی کے خلاف آواز اٹھاتے ہیں۔
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Plot Card -->
-                <div class="element-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Plot</h3>
-                            <h3 class="card-title urdu-text" style="display: none">پلاٹ</h3>
-                            <p class="card-subtitle eng-text">The "what happens"</p>
-                            <p class="card-subtitle urdu-text" style="display: none">"کیا ہوتا ہے"</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The sequence of events that make up the story. It's how the conflict unfolds and resolves.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                واقعات کا وہ تسلسل جو کہانی کو تشکیل دیتا ہے۔ یہ وہ طریقہ ہے جس سے تصادم کھلتا اور حل ہوتا ہے۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">The Classic Structure:</span>
-                            <span class="section-label urdu-text" style="display: none">کلاسک ساخت:</span>
-                            <div class="eng-text">
-                                <p>1. <strong>Exposition:</strong> Introduction to characters and setting</p>
-                                <p>2. <strong>Rising Action:</strong> Conflict develops, tension builds</p>
-                                <p>3. <strong>Climax:</strong> The highest point of tension</p>
-                                <p>4. <strong>Falling Action:</strong> Events after the climax</p>
-                                <p>5. <strong>Resolution:</strong> The story's conclusion</p>
-                            </div>
-                            <div class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                                <p>1. <strong>تعارف:</strong> کرداروں اور ترتیب کا تعارف</p>
-                                <p>2. <strong>ابھرتا عمل:</strong> تصادم پروان چڑھتا ہے، کشیدگی بڑھتی ہے</p>
-                                <p>3. <strong>منتہا:</strong> کشیدگی کا سب سے اونچا نقطہ</p>
-                                <p>4. <strong>گرتا عمل:</strong> منتہا کے بعد کے واقعات</p>
-                                <p>5. <strong>حل:</strong> کہانی کا اختتام</p>
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-crown"></i>
-                                    The Lion King
-                                </div>
-                                <p class="example-desc">Simba's journey from cub to exile to returning as king follows the classic plot structure perfectly.</p>
-                            </div>
-                            
-                            <!-- Urdu/Pakistan Example -->
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-crown"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">افسانہ "بوا"</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    سعدیہ حسن کے افسانے میں ایک عورت کی جدوجہد جو روایتی معاشرے کے دباؤ کے باوجود اپنی تعلیم اور کیریئر کے لیے لڑتی ہے۔
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Theme Card -->
-                <div class="element-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Theme</h3>
-                            <h3 class="card-title urdu-text" style="display: none">مرکزی خیال</h3>
-                            <p class="card-subtitle eng-text">The "why it matters"</p>
-                            <p class="card-subtitle urdu-text" style="display: none">"یہ کیوں اہم ہے"</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The central idea or message of the story. What the story is really about underneath the surface events.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                کہانی کا مرکزی خیال یا پیغام۔ کہانی واقعی سطحی واقعات کے نیچے کس چیز کے بارے میں ہے۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Why it matters:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیوں اہم ہے:</span>
-                            <p class="eng-text">Gives the story meaning and depth, making it resonate with readers on a deeper level.</p>
-                            <p class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                                کہانی کو معنی اور گہرائی دیتا ہے، جو قارئین کے ساتھ گہرے سطح پر ہم آہنگی پیدا کرتا ہے۔
-                            </p>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-dove"></i>
-                                    To Kill a Mockingbird
-                                </div>
-                                <p class="example-desc">Themes of racial injustice, moral growth, and the loss of innocence.</p>
-                            </div>
-                            
-                            <!-- Urdu/Pakistan Example -->
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-dove"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">میرے پاس تمہارے لیے کہانی</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    امید، ہمت، اور انسانی تعلقات کی مضبوطی کا موضوع جو پاکستانی معاشرے کی کشمکش اور خواہشات کو ظاہر کرتا ہے۔
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Advanced Elements Section -->
-        <section id="advanced" class="content-section">
-            <div class="advanced-section">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-line section-icon"></i>
-                    <span class="eng-text">Advanced Story Elements</span>
-                    <span class="urdu-text" style="display: none">اعلیٰ درجے کے کہانی عناصر</span>
-                </h2>
-                
-                <p class="section-intro eng-text">These are the tools writers use to tell their stories in unique and artistic ways. They add depth and style to the narrative.</p>
-                <p class="section-intro urdu-text" style="display: none; direction: rtl; text-align: right">
-                    یہ وہ اوزار ہیں جو مصنفین اپنی کہانیوں کو منفرد اور فنکارانہ طریقوں سے بیان کرنے کے لیے استعمال کرتے ہیں۔ یہ بیانیہ میں گہرائی اور اسٹائل کا اضافہ کرتے ہیں۔
-                </p>
-                
-                <!-- Point of View Card -->
-                <div class="advanced-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <div>
-                            <h3 class="card-title eng-text">Point of View (POV)</h3>
-                            <h3 class="card-title urdu-text" style="display: none">نقطہ نظر</h3>
-                            <p class="card-subtitle eng-text">The "lens" through which the story is told</p>
-                            <p class="card-subtitle urdu-text" style="display: none">وہ "لینس" جس کے ذریعے کہانی سنائی جاتی ہے</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-section">
-                            <span class="section-label eng-text">What it is:</span>
-                            <span class="section-label urdu-text" style="display: none">یہ کیا ہے:</span>
-                            <div class="definition-box eng-text">
-                                The perspective from which the story is narrated. It controls how much information the reader receives and how they connect with characters.
-                            </div>
-                            <div class="definition-box urdu-text" style="display: none; direction: rtl; text-align: right">
-                                وہ نقطہ نظر جس سے کہانی بیان کی جاتی ہے۔ یہ کنٹرول کرتا ہے کہ قاری کو کتنی معلومات ملتی ہیں اور وہ کرداروں کے ساتھ کس طرح جڑتے ہیں۔
-                            </div>
-                        </div>
-                        
-                        <div class="card-section">
-                            <span class="section-label eng-text">Types & Examples:</span>
-                            <span class="section-label urdu-text" style="display: none">اقسام اور مثالیں:</span>
-                            
-                            <div class="example-item eng-example">
-                                <div class="example-title">
-                                    <i class="fas fa-user"></i>
-                                    First Person ("I")
-                                </div>
-                                <p class="example-desc"><strong>Definition:</strong> The narrator is a character in the story, telling it from their own perspective.</p>
-                                <p class="example-desc"><strong>Example:</strong> "I knew I shouldn't have gone to the party that night." (The Catcher in the Rye)</p>
-                            </div>
-                            
-                            <div class="example-item urdu-example" style="display: none">
-                                <div class="example-title">
-                                    <i class="fas fa-user"></i>
-                                    <span style="font-family: 'Noto Sans Arabic', sans-serif">پہلا شخص ("میں")</span>
-                                </div>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    <strong>تعریف:</strong> راوی کہانی کا ایک کردار ہے، جو اپنے نقطہ نظر سے بیان کرتا ہے۔
-                                </p>
-                                <p class="example-desc urdu-text" style="display: none; direction: rtl; text-align: right">
-                                    <strong>مثال:</strong> "مجھے معلوم تھا کہ مجھے اس رات پارٹی میں نہیں جانا چاہیے تھا۔" (اردو افسانہ "وہ شام")
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Summary Section -->
-        <section id="summary" class="content-section">
-            <div class="summary-section">
-                <h2 class="section-title">
-                    <i class="fas fa-clipboard-list section-icon"></i>
-                    <span class="eng-text">Quick Reference Summary</span>
-                    <span class="urdu-text" style="display: none">جلد مرور کا خلاصہ</span>
-                </h2>
-                
-                <p class="eng-text">Here's a simple overview of all the story elements and how they work together to create compelling narratives.</p>
-                <p class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                    یہاں تمام کہانی عناصر کا ایک سادہ جائزہ ہے اور یہ کہ وہ کیسے مل کر پرکشش بیانیہ تشکیل دیتے ہیں۔
-                </p>
-                
-                <div class="summary-grid">
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Plot</span>
-                        <span class="eng-text">What happens</span>
-                        <span class="summary-label urdu-text" style="display: none">پلاٹ</span>
-                        <span class="urdu-text" style="display: none">کیا ہوتا ہے</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Theme</span>
-                        <span class="eng-text">Why it matters</span>
-                        <span class="summary-label urdu-text" style="display: none">مرکزی خیال</span>
-                        <span class="urdu-text" style="display: none">یہ کیوں اہم ہے</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Setting</span>
-                        <span class="eng-text">Where and when</span>
-                        <span class="summary-label urdu-text" style="display: none">ترتیب</span>
-                        <span class="urdu-text" style="display: none">کہاں اور کب</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Characters</span>
-                        <span class="eng-text">Who it happens to</span>
-                        <span class="summary-label urdu-text" style="display: none">کردار</span>
-                        <span class="urdu-text" style="display: none">کس کے ساتھ ہوتا ہے</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Conflict</span>
-                        <span class="eng-text">The problem they face</span>
-                        <span class="summary-label urdu-text" style="display: none">تصادم</span>
-                        <span class="urdu-text" style="display: none">مسئلہ جس کا سامنا ہے</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">POV</span>
-                        <span class="eng-text">Who's telling the story</span>
-                        <span class="summary-label urdu-text" style="display: none">نقطہ نظر</span>
-                        <span class="urdu-text" style="display: none">کون کہانی سناتا ہے</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Tone</span>
-                        <span class="eng-text">How the writer feels about it</span>
-                        <span class="summary-label urdu-text" style="display: none">لہجہ</span>
-                        <span class="urdu-text" style="display: none">مصنف کا ردعمل</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label eng-text">Style</span>
-                        <span class="eng-text">How they write it down</span>
-                        <span class="summary-label urdu-text" style="display: none">اسلوب</span>
-                        <span class="urdu-text" style="display: none">کس طرح لکھتے ہیں</span>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 40px; padding: 25px; background: rgba(30, 41, 59, 0.8); border-radius: 12px; border-left: 4px solid var(--accent-color);">
-                    <h3 style="color: var(--text-accent); margin-bottom: 15px;" class="eng-text">Simple Analogy</h3>
-                    <h3 style="color: var(--text-accent); margin-bottom: 15px; direction: rtl; text-align: right; display: none;" class="urdu-text">سادہ تشبیہ</h3>
-                    
-                    <p class="eng-text">Think of the <strong>Essential Elements</strong> as the <strong>ingredients</strong> of a cake (flour, eggs, sugar). The <strong>Advanced Elements</strong> are the <strong>baker's technique</strong>—how you mix it, the flavor you choose, and how you decorate it. Both are needed to create the final, delicious product.</p>
-                    
-                    <p class="urdu-text" style="display: none; direction: rtl; text-align: right">
-                        <strong>بنیادی عناصر</strong> کو کیک کے <strong>اجزاء</strong> کے طور پر سوچیں (آٹا، انڈے، چینی)۔ <strong>اعلیٰ درجے کے عناصر</strong> <strong>بیکر کی تکنیک</strong> ہیں—آپ اسے کیسے ملاتے ہیں، کون سا ذائقہ منتخب کرتے ہیں، اور اسے کیسے سجاتے ہیں۔ دونوں حتمی، مزیدار مصنوعات بنانے کے لیے ضروری ہیں۔
-                    </p>
-                </div>
-                
-                <div style="margin-top: 40px; display: flex; justify-content: center;">
-                    <button id="backToTop" class="tab-btn" style="background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary)); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; border-radius: 12px;">
-                        <i class="fas fa-arrow-up"></i> 
-                        <span class="eng-text">Back to Top</span>
-                        <span class="urdu-text" style="display: none">اوپر واپس جائیں</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer class="container">
-        <p class="eng-text">Story Elements Guide &copy; 2023 | Created for educational purposes</p>
-        <p class="urdu-text" style="display: none; direction: rtl; text-align: right">کہانی عناصر رہنما &copy; 2023 | تعلیمی مقاصد کے لیے تیار کیا گیا</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-secondary);" class="eng-text">All examples are for illustrative purposes and belong to their respective creators.</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-secondary); display: none; direction: rtl; text-align: right" class="urdu-text">تمام مثالیں تفہیمی مقاصد کے لیے ہیں اور ان کے متعلقہ تخلیق کاروں سے تعلق رکھتی ہیں۔</p>
-    </footer>
-
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
-        // Current language state
-        let currentLanguage = 'en';
-        
-        // Tab Navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const contentSections = document.querySelectorAll('.content-section');
-            
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Update active tab button
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show active content section
-                    contentSections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === tabId) {
-                            section.classList.add('active');
-                        }
-                    });
-                    
-                    // Scroll to top of content
-                    window.scrollTo({
-                        top: 250,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Language toggle functionality
-            const langBtns = document.querySelectorAll('.lang-btn');
-            const engElements = document.querySelectorAll('.eng-text');
-            const urduElements = document.querySelectorAll('.urdu-text');
-            const engExamples = document.querySelectorAll('.eng-example');
-            const urduExamples = document.querySelectorAll('.urdu-example');
-            
-            langBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    
-                    if (lang === currentLanguage) return;
-                    
-                    // Update active language button
-                    langBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Update language state
-                    currentLanguage = lang;
-                    
-                    // Toggle visibility of language elements
-                    if (lang === 'en') {
-                        engElements.forEach(el => el.style.display = 'block');
-                        urduElements.forEach(el => el.style.display = 'none');
-                        engExamples.forEach(el => el.style.display = 'block');
-                        urduExamples.forEach(el => el.style.display = 'none');
-                    } else {
-                        engElements.forEach(el => el.style.display = 'none');
-                        urduElements.forEach(el => el.style.display = 'block');
-                        engExamples.forEach(el => el.style.display = 'none');
-                        urduExamples.forEach(el => el.style.display = 'block');
-                    }
-                    
-                    // Update body direction for RTL support
-                    if (lang === 'ur') {
-                        document.body.style.direction = 'rtl';
-                        document.querySelectorAll('.container').forEach(container => {
-                            container.style.textAlign = 'right';
-                        });
-                    } else {
-                        document.body.style.direction = 'ltr';
-                        document.querySelectorAll('.container').forEach(container => {
-                            container.style.textAlign = 'left';
-                        });
-                    }
-                });
-            });
-            
-            // Back to top button
-            const backToTopBtn = document.getElementById('backToTop');
-            if (backToTopBtn) {
-                backToTopBtn.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Switch to first tab
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    document.querySelector('[data-tab="essential"]').classList.add('active');
-                    
-                    contentSections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === 'essential') {
-                            section.classList.add('active');
-                        }
-                    });
-                });
+        // Custom MathJax configuration
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          chtml: {
+            fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff2'
+          },
+          options: {
+            renderActions: {
+              addMenu: [2, function (doc) { doc.menu.node.style.display = 'none'; }],
+              postProcess: [10, (doc) => {
+                // Adjust LaTeX block alignment for the formula box aesthetic
+                doc.outputJax.chtml.container.style.textAlign = 'center';
+              }]
             }
-            
-            // Add scroll animation to cards
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            // Observe all cards for animation
-            document.querySelectorAll('.element-card, .advanced-card, .summary-item').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-                observer.observe(card);
-            });
-            
-            // Add hover effect to cards with delay
-            document.querySelectorAll('.element-card, .advanced-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transition = 'all 0.3s ease';
-                });
-            });
+          }
+        };
+
+        // JS to ensure rendering is triggered on load (Fix for raw format issue)
+        window.addEventListener('load', function() {
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
         });
     </script>
-</body>
+</head>
+<body>
+
+    <h1>Basic Statistics & Probability Core Formulas</h1>
+
+    <div class="sheet-container">
+        
+        <div class="note-block">
+            <div class="chapter-box">Ch 1: Central Tendency</div>
+            
+            <h3 class="highlight-title">What are the main "Averages"? (Mean, Median, Mode)</h3>
+            <p>They describe the center of a data set. Most common is the <strong>Mean</strong> $(\bar{x})$.</p>
+
+            <div class="formula-box">
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">POPULATION MEAN $(\mu)$ vs SAMPLE MEAN $(\bar{x})$</p>
+                $$\mu = \frac{\sum_{i=1}^{N} x_i}{N}$$ 
+                $$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$$
+                <p style="font-size:0.9em; margin-top: 5px;">Where $N$ is **Population Size** and $n$ is **Sample Size**.</p>
+            </div>
+        </div>
+
+        <div class="note-block">
+            <div class="chapter-box">Ch 2: Dispersion & Variability</div>
+            
+            <h3 class="highlight-title">How spread out is the data? (Variance & S.D.)</h3>
+            <p><strong>Variance</strong> is the average squared difference from the Mean. The <strong>Standard Deviation (S.D.)</strong> is its square root.</p>
+
+            <div class="formula-box">
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">POPULATION VARIANCE $(\sigma^2)$</p>
+                $$\sigma^2 = \frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}$$
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px; margin-top: 15px;">SAMPLE VARIANCE $(s^2)$ - Bessel's Correction</p>
+                $$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}$$
+            </div>
+            
+            <ul class="blue-star-list">
+                <li><span>Standard Deviation:</span> $\sigma = \sqrt{\sigma^2}$ (Population) & $s = \sqrt{s^2}$ (Sample).</li>
+                <li><span>Range:</span> Maximum value minus Minimum value. Simple but sensitive to outliers.</li>
+            </ul>
+        </div>
+
+        <div class="note-block">
+            <div class="chapter-box">Ch 3: Normal Distribution</div>
+            
+            <h3 class="highlight-title">How far is a point from the mean? (Z-Score)</h3>
+            <p>The Z-score (or standard score) tells you the number of standard deviations a data point is from the mean.</p>
+            
+            <div class="formula-box">
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">Z-SCORE (Standard Score)</p>
+                $$Z = \frac{x - \mu}{\sigma}$$
+            </div>
+
+            <ul class="blue-star-list">
+                <li><span>Empirical Rule (68-95-99.7):</span> For normal distribution, $\approx 68\%$ of data is within $1\sigma$, $95\%$ is within $2\sigma$, and $99.7\%$ is within $3\sigma$. 
+
+[Image of Empirical Rule 68-95-99.7 Normal Distribution]
+</li>
+                <li><span>A Z-score of 0</span> means the data point is exactly the mean.</li>
+            </ul>
+        </div>
+
+        <div class="note-block">
+            <div class="chapter-box">Ch 4: Core Probability Rules</div>
+            
+            <h3 class="highlight-title">Probability of an Event A, $P(A)$</h3>
+            <div class="formula-box">
+                $$P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}}$$
+            </div>
+            
+            <ul class="blue-star-list">
+                <li><span>Addition Rule (OR):</span> $P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)$</li>
+                <li><span>Mutually Exclusive (OR):</span> If $A$ and $B$ cannot happen together, $P(A \text{ or } B) = P(A) + P(B)$.</li>
+            </ul>
+        </div>
+
+        <div class="note-block">
+            <h3 class="highlight-title">Conditional Probability (GIVEN THAT)</h3>
+            <p>The probability of event $A$ occurring, given that event $B$ has already occurred.</p>
+            
+            <div class="formula-box">
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">CONDITIONAL PROBABILITY</p>
+                $$P(A|B) = \frac{P(A \text{ and } B)}{P(B)}$$
+            </div>
+            
+            <ul class="blue-star-list">
+                <li><span>Multiplication Rule (AND):</span> $P(A \text{ and } B) = P(A|B) \cdot P(B)$</li>
+                <li><span>Independence:</span> If $A$ and $B$ are independent, $P(A \text{ and } B) = P(A) \cdot P(B)$. (The outcome of one event does not affect the other.)</li>
+            </ul>
+        </div>
+        
+        <div class="note-block">
+            <div class="chapter-box">Ch 5: Counting Rules</div>
+            
+            <h3 class="highlight-title">Order Matters vs. Order Does Not Matter</h3>
+            <p>These formulas count the number of ways to select $k$ items from a set of $n$ items.</p>
+
+            <div class="formula-box">
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px;">PERMUTATION (ORDER MATTERS)</p>
+                $${}_n P_k = \frac{n!}{(n-k)!}$$
+                
+                <p style="font-size:0.8em; color:var(--pen-red); margin-bottom: 5px; margin-top: 15px;">COMBINATION (ORDER DOES NOT MATTER)</p>
+                $${}_n C_k = \binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+            </div>
+        </div>
+
+    </div>
+    </body>
 </html>
