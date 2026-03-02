@@ -438,15 +438,32 @@
             font-size: 12px;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            /* Increased gap before button */
             padding-left: 10px;
             border-left: 2px solid var(--accent);
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            line-clamp: 3;
-            /* Limit long notes */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        }
+
+        .btn-wa span.pc-text {
+            display: inline;
+        }
+
+        .btn-wa span.mob-text {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .btn-wa span.pc-text {
+                display: none;
+            }
+
+            .btn-wa span.mob-text {
+                display: inline;
+            }
+
+            .expand-hint {
+                margin-bottom: 20px;
+            }
         }
 
         .btn-wa {
@@ -766,7 +783,17 @@
 
         function toggleCard(idx) {
             const card = document.getElementById(`card-${idx}`);
-            card.classList.toggle('expanded');
+            const alreadyExpanded = card.classList.contains('expanded');
+
+            // Close all other cards
+            document.querySelectorAll('.card.expanded').forEach(c => {
+                c.classList.remove('expanded');
+            });
+
+            // Toggle current if it wasn't the one we just closed
+            if (!alreadyExpanded) {
+                card.classList.add('expanded');
+            }
         }
 
         function render() {
@@ -861,7 +888,9 @@
                         <div class="expand-hint">Tap for details <i class="fa fa-chevron-down"></i></div>
 
                         <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa" onclick="event.stopPropagation()">
-                            <i class="fab fa-whatsapp"></i> Buy via WhatsApp
+                            <i class="fab fa-whatsapp"></i> 
+                            <span class="pc-text">Buy via WhatsApp</span>
+                            <span class="mob-text">Buy</span>
                         </a>
                     </div>
                 </div>
