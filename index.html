@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>Premium Inventory - Scraped from Sheets</title>
     <!-- Modern Typography -->
     <link
@@ -154,11 +155,22 @@
             box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        /* Grid */
+        /* Masonry Layout */
         #productGrid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 32px;
+            column-count: 3;
+            column-gap: 32px;
+        }
+
+        @media (max-width: 1200px) {
+            #productGrid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #productGrid {
+                column-count: 1;
+            }
         }
 
         /* Cards */
@@ -167,8 +179,10 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 32px;
+            break-inside: avoid;
             transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), box-shadow 0.4s;
             animation: fadeIn 0.6s ease-out;
         }
@@ -187,7 +201,6 @@
         }
 
         .img-container {
-            aspect-ratio: 4/3;
             background: #080a0c;
             position: relative;
             overflow: hidden;
@@ -195,8 +208,8 @@
 
         .img-container img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
             transition: 0.8s ease;
         }
 
@@ -477,11 +490,30 @@
         let currentFilter = 'all';
         let searchQuery = '';
 
+        const ERROR_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
+
         const log = (msg) => {
             const d = document.getElementById('debug');
             d.style.display = 'block';
             d.innerText += `> ${msg}\n`;
         };
+
+        function revealCard(idx) {
+            const card = document.getElementById(`card-${idx}`);
+            if (card) {
+                // Stagger the reveal slightly
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, idx * 50);
+            }
+        }
+
+        function handleBrokenImg(img, idx) {
+            console.warn(`Systematic load failed for item ${idx}. Using fallback.`);
+            img.src = ERROR_IMAGE;
+            revealCard(idx);
+        }
 
         /**
          * INITIALIZATION
@@ -584,24 +616,34 @@
                     `Hi! I'm interested in: *${i.name}*\nPrice: Rs. ${i.price}\nCondition: ${i.condition}\nLink: Premium Catalog`
                 );
 
-                // Image Fallback Logic
-                let photoUrl = IMAGE_MAP[i.name] || i.photo;
+                // Image Loading Strategy:
+                // We show an <img> with referrerpolicy="no-referrer" 
+                // and use opacity:0 (handled by .card.hidden) until it's ready.
 
+                let photoUrl = IMAGE_MAP[i.name] || i.photo;
                 if (!photoUrl || !photoUrl.includes('http')) {
-                    // Try to find a link in notes
                     const match = i.notes.match(/https?:\/\/[^\s]+/);
                     if (match && match[0].match(/\.(jpg|jpeg|png|webp)/i)) {
                         photoUrl = match[0];
                     } else {
-                        photoUrl = `https://images.unsplash.com/photo-1594489428504-5c0c480a15fd?q=80&w=400&h=300&auto=format&fit=crop`;
+                        photoUrl = ERROR_IMAGE;
                     }
                 }
 
+                // If it's a Google Sheet internal image, use proxy to bypass hotlink protection
+                if (photoUrl.includes('sheets-images-rt')) {
+                    photoUrl = `https://images.weserv.nl/?url=${encodeURIComponent(photoUrl)}`;
+                }
+
                 return `
-                <div class="card" style="animation-delay: ${idx * 0.1}s">
+                <div class="card" id="card-${idx}" style="opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
                     <div class="img-container">
                         ${i.status ? `<div class="badge">${i.status}</div>` : ''}
-                        <img src="${photoUrl}" alt="${i.name}" loading="lazy">
+                        <img id="img-${idx}" 
+                             src="${photoUrl}" 
+                             alt="${i.name}" 
+                             onload="revealCard(${idx})"
+                             onerror="handleBrokenImg(this, ${idx})">
                     </div>
                     <div class="body">
                         <div class="cat">${i.category}</div>
