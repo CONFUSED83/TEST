@@ -72,20 +72,30 @@
 
         /* Nav / Controls */
         .controls {
-            position: sticky;
-            top: 20px;
-            z-index: 1000;
             margin-bottom: 48px;
             padding: 12px;
-            background: var(--glass);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: var(--surface);
             border-radius: var(--radius);
             border: 1px solid var(--border);
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .sort-select {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .sort-select:focus {
+            border-color: var(--accent);
         }
 
         .search {
@@ -169,7 +179,32 @@
 
         @media (max-width: 768px) {
             #productGrid {
-                column-count: 1;
+                column-count: 2;
+                column-gap: 16px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .title {
+                font-size: 18px;
+            }
+
+            .price-val {
+                font-size: 24px;
+            }
+
+            .body {
+                padding: 16px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search {
+                width: 100%;
             }
         }
 
@@ -370,7 +405,6 @@
 
     <header>
         <h1>The Catalog</h1>
-        <p>Premium pre-owned essentials, synced live from Google Sheets.</p>
     </header>
 
     <div class="container">
@@ -384,6 +418,11 @@
             <div class="filters" id="categoryFilters">
                 <button class="btn-filter active" onclick="filterCat('all')">All Items</button>
             </div>
+            <select id="priceSort" class="sort-select" onchange="render()">
+                <option value="default">Default Sort</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+            </select>
         </div>
 
         <div id="productGrid">
@@ -396,7 +435,7 @@
 
     <script>
         const SHEET_ID = '1uVEKMcghO2k76-3O1b8QDDVec7qYEpfUZtn0so0TWa4';
-        const WA_NUMBER = '923057374485';
+        const WA_NUMBER = '923252390972';
 
         const IMAGE_MAP = {
             "3D Squares Painting (Original)": "https://docs.google.com/sheets-images-rt/AEjM2Aw1XrAd3iAXCDRI_U7czNfb_u8DGyXSLJImEuVYj97okC27tqqSg_YVtrDRFehCEeT9DM19m4aAohEfDe0HdZ_ZFupE4DbZ13oFr30H6PfPFOr-2PKTBRbubp2tsawVDwGZi-Pu5DBFP2NdpaDm49AcyzOESX1nQcV4-A=w399-h220",
@@ -493,9 +532,8 @@
         const ERROR_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
 
         const log = (msg) => {
-            const d = document.getElementById('debug');
-            d.style.display = 'block';
-            d.innerText += `> ${msg}\n`;
+            console.log(`> ${msg}`);
+            // UI logging disabled for clean look
         };
 
         function revealCard(idx) {
@@ -598,13 +636,24 @@
 
         function render() {
             const grid = document.getElementById('productGrid');
-            const items = db.filter(i => {
+            const sortVal = document.getElementById('priceSort').value;
+
+            let items = db.filter(i => {
                 const matchSearch = i.name.toLowerCase().includes(searchQuery) ||
                     i.notes.toLowerCase().includes(searchQuery) ||
                     i.category.toLowerCase().includes(searchQuery);
                 const matchCat = currentFilter === 'all' || i.category === currentFilter;
                 return matchSearch && matchCat;
             });
+
+            // Sorting Logic
+            if (sortVal !== 'default') {
+                items.sort((a, b) => {
+                    const priceA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
+                    const priceB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
+                    return sortVal === 'low' ? priceA - priceB : priceB - priceA;
+                });
+            }
 
             if (items.length === 0) {
                 grid.innerHTML = `<div id="statusDisplay"><h3>No results found</h3></div>`;
@@ -613,7 +662,7 @@
 
             grid.innerHTML = items.map((i, idx) => {
                 const waMsg = encodeURIComponent(
-                    `Hi! I'm interested in: *${i.name}*\nPrice: Rs. ${i.price}\nCondition: ${i.condition}\nLink: Premium Catalog`
+                    `Hi! I am interested in: *${i.name}*.\nPrice: Rs. ${i.price}.`
                 );
 
                 // Image Loading Strategy:
