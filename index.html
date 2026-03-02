@@ -4,24 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Catalog - Live Inventory</title>
+    <title>Premium Inventory - Scraped from Sheets</title>
+    <!-- Modern Typography -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Outfit:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --bg: #08090b;
-            --card: #13151a;
-            --accent: #00d95a;
-            --accent-glow: rgba(0, 217, 90, 0.3);
-            --text: #c9ced6;
-            --text-bright: #ffffff;
-            --muted: #6b7280;
-            --border: rgba(255, 255, 255, 0.08);
-            --price: #4ade80;
-            --glass: rgba(19, 21, 26, 0.7);
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --bg: #050608;
+            --surface: #101217;
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+            --glass: rgba(16, 18, 23, 0.85);
+            --radius: 24px;
         }
 
         * {
@@ -32,258 +33,199 @@
 
         body {
             background: var(--bg);
-            color: var(--text);
+            color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(0, 217, 90, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 217, 90, 0.03) 0%, transparent 40%);
             min-height: 100vh;
+            padding-bottom: 80px;
         }
 
-        /* Hero Header */
+        /* Hero */
         header {
-            padding: 100px 20px 60px;
+            padding: 80px 24px 60px;
             text-align: center;
-            position: relative;
+            background: radial-gradient(circle at top, rgba(34, 197, 94, 0.08), transparent 70%);
         }
 
         header h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(40px, 8vw, 72px);
+            font-size: clamp(3rem, 10vw, 5rem);
             font-weight: 800;
             letter-spacing: -2px;
-            color: var(--text-bright);
-            margin-bottom: 16px;
-            animation: slideDown 0.8s var(--ease);
+            margin-bottom: 12px;
+            line-height: 0.9;
         }
 
         header p {
-            color: var(--muted);
-            font-size: clamp(16px, 2vw, 20px);
-            max-width: 700px;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
             margin: 0 auto;
-            animation: fadeIn 1.2s var(--ease);
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px 100px;
+            padding: 0 24px;
         }
 
-        /* Premium Nav / Filter Bar */
-        .nav-bar {
+        /* Nav / Controls */
+        .controls {
             position: sticky;
-            top: 24px;
+            top: 20px;
             z-index: 1000;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            margin-bottom: 48px;
             padding: 12px;
-            border-radius: 20px;
+            background: var(--glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius);
             border: 1px solid var(--border);
-            margin-bottom: 60px;
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: slideUp 0.8s var(--ease);
+            gap: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .search-box {
-            position: relative;
+        .search {
             flex: 1;
-            min-width: 280px;
+            min-width: 260px;
+            position: relative;
         }
 
-        .search-box i {
+        .search i {
             position: absolute;
-            left: 18px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
-        .search-box input {
+        .search input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid transparent;
-            padding: 14px 14px 14px 50px;
-            border-radius: 14px;
+            padding: 14px 20px 14px 54px;
+            border-radius: 16px;
             color: white;
             font-size: 15px;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .search-box input:focus {
+        .search input:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 16px var(--accent-glow);
         }
 
-        .categories {
+        .filters {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
         }
 
-        .categories::-webkit-scrollbar {
+        .filters::-webkit-scrollbar {
             display: none;
         }
 
-        .cat-btn {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+        .btn-filter {
+            padding: 10px 24px;
             background: transparent;
-            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text-muted);
             font-weight: 600;
-            font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s;
             white-space: nowrap;
+            transition: 0.3s;
         }
 
-        .cat-btn:hover {
+        .btn-filter:hover {
             color: white;
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .cat-btn.active {
+        .btn-filter.active {
             background: var(--accent);
-            color: #000;
+            color: black;
             border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        /* Grid & Cards */
-        #mainGrid {
+        /* Grid */
+        #productGrid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 32px;
         }
 
+        /* Cards */
         .card {
-            background: var(--card);
-            border-radius: 28px;
+            background: var(--surface);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: all 0.4s var(--ease);
             display: flex;
             flex-direction: column;
-            position: relative;
-            animation: cardReveal 0.6s var(--ease) backwards;
+            transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), box-shadow 0.4s;
+            animation: fadeIn 0.6s ease-out;
         }
 
-        @keyframes cardReveal {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(20px);
             }
         }
 
         .card:hover {
-            transform: translateY(-12px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            transform: translateY(-8px);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
-        .card-img {
+        .img-container {
             aspect-ratio: 4/3;
-            background: #0d0f12;
-            overflow: hidden;
+            background: #080a0c;
             position: relative;
+            overflow: hidden;
         }
 
-        .card-img img {
+        .img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s var(--ease);
+            transition: 0.8s ease;
         }
 
-        .card:hover .card-img img {
-            transform: scale(1.1);
+        .card:hover .img-container img {
+            transform: scale(1.08);
         }
 
-        .status-badge {
+        .badge {
             position: absolute;
             top: 20px;
             right: 20px;
             padding: 6px 14px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             border-radius: 100px;
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            backdrop-filter: blur(10px);
-            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .status-available {
-            background: rgba(0, 217, 90, 0.2);
-            color: #4ade80;
-            border: 1px solid rgba(0, 217, 90, 0.3);
-        }
-
-        .status-sold {
-            background: rgba(248, 113, 113, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-
-        .card-content {
+        .body {
             padding: 28px;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
-        .card-tag {
+        .cat {
             font-size: 11px;
             font-weight: 800;
             color: var(--accent);
@@ -292,103 +234,102 @@
             margin-bottom: 8px;
         }
 
-        .card-title {
+        .title {
+            font-family: 'Outfit', sans-serif;
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             color: white;
             line-height: 1.2;
-            margin-bottom: 12px;
-            font-family: 'Outfit', sans-serif;
+            margin-bottom: 16px;
         }
 
-        .card-price {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--price);
-            margin-bottom: 20px;
+        .price-box {
             display: flex;
             align-items: baseline;
             gap: 6px;
+            margin-bottom: 24px;
         }
 
-        .card-price small {
-            font-size: 14px;
-            color: var(--muted);
+        .price-val {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .price-curr {
+            color: var(--text-muted);
+            font-size: 16px;
             font-weight: 600;
         }
 
-        .card-specs {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 24px;
-            padding: 16px;
+        .info-grid {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
+            padding: 16px;
+            display: grid;
+            gap: 8px;
+            margin-bottom: 24px;
         }
 
-        .spec {
+        .info-row {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
         }
 
-        .spec-label {
-            color: var(--muted);
+        .label {
+            color: var(--text-muted);
         }
 
-        .spec-value {
+        .val {
             color: white;
             font-weight: 600;
         }
 
-        .card-notes {
+        .notes {
             font-size: 14px;
-            color: var(--muted);
+            color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 24px;
-            line-height: 1.5;
-            border-left: 2px solid var(--accent);
+            margin-bottom: 30px;
             padding-left: 12px;
+            border-left: 2px solid var(--accent);
         }
 
-        .buy-btn {
-            width: 100%;
-            padding: 16px;
-            border-radius: 16px;
-            background: var(--accent);
-            color: #000;
-            text-decoration: none;
-            font-weight: 800;
-            text-align: center;
+        .btn-wa {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 800;
             margin-top: auto;
+            transition: 0.3s;
         }
 
-        .buy-btn:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-            box-shadow: 0 10px 20px var(--accent-glow);
+        .btn-wa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px var(--accent-glow);
         }
 
-        /* Empty States / Loading */
-        #loader {
-            grid-column: 1/-1;
+        /* States */
+        #statusDisplay {
+            grid-column: 1 / -1;
             text-align: center;
             padding: 100px 0;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
+        .loading-ring {
+            width: 48px;
+            height: 48px;
             border: 4px solid var(--border);
             border-top: 4px solid var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 24px;
         }
 
         @keyframes spin {
@@ -397,50 +338,17 @@
             }
         }
 
-        .error-message {
-            grid-column: 1/-1;
-            background: rgba(248, 113, 113, 0.1);
-            border: 1px solid rgba(248, 113, 113, 0.2);
-            padding: 40px;
-            border-radius: 24px;
-            text-align: center;
-        }
-
-        .error-message h3 {
-            color: #f87171;
-            margin-bottom: 12px;
-        }
-
-        .error-message code {
-            display: block;
-            background: #000;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 15px 0;
+        .debug-panel {
+            display: none;
+            background: #1a1a1a;
+            color: #4ade80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
             font-family: monospace;
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            header {
-                padding: 60px 20px 40px;
-            }
-
-            .nav-bar {
-                top: 12px;
-            }
-
-            #mainGrid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
+            font-size: 12px;
+            white-space: pre-wrap;
+            border-left: 4px solid #4ade80;
         }
     </style>
 </head>
@@ -448,201 +356,302 @@
 <body>
 
     <header>
-        <h1>Premium Inventory</h1>
-        <p>Connecting you with high-quality electronics, unique furniture, and curated collectibles in Pakistan.</p>
+        <h1>The Catalog</h1>
+        <p>Premium pre-owned essentials, synced live from Google Sheets.</p>
     </header>
 
     <div class="container">
-        <div class="nav-bar">
-            <div class="search-box">
+        <div id="debug" class="debug-panel"></div>
+
+        <div class="controls">
+            <div class="search">
                 <i class="fa fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search items by name, category, or notes...">
+                <input type="text" id="searchInput" placeholder="Search furniture, electronics, books...">
             </div>
-            <div class="categories" id="catList">
-                <button class="cat-btn active" onclick="setCategory('all')">All Items</button>
+            <div class="filters" id="categoryFilters">
+                <button class="btn-filter active" onclick="filterCat('all')">All Items</button>
             </div>
         </div>
 
-        <div id="mainGrid">
-            <div id="loader">
-                <div class="spinner"></div>
-                <p>Syncing with Google Sheets...</p>
+        <div id="productGrid">
+            <div id="statusDisplay">
+                <div class="loading-ring"></div>
+                <p>Gathering inventory from Google Sheets...</p>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Premium Catalog • Worldwide Shipping available on select items.</p>
-        <p style="margin-top: 10px;">WhatsApp: +92 305 7374485</p>
-    </footer>
-
     <script>
         const SHEET_ID = '1uVEKMcghO2k76-3O1b8QDDVec7qYEpfUZtn0so0TWa4';
-        const WA_PHONE = '923057374485';
+        const WA_NUMBER = '923057374485';
 
-        let allItems = [];
-        let currentCategory = 'all';
-        let searchTerm = '';
+        const IMAGE_MAP = {
+            "3D Squares Painting (Original)": "https://docs.google.com/sheets-images-rt/AEjM2Aw1XrAd3iAXCDRI_U7czNfb_u8DGyXSLJImEuVYj97okC27tqqSg_YVtrDRFehCEeT9DM19m4aAohEfDe0HdZ_ZFupE4DbZ13oFr30H6PfPFOr-2PKTBRbubp2tsawVDwGZi-Pu5DBFP2NdpaDm49AcyzOESX1nQcV4-A=w399-h220",
+            "Adam Lebor - Tower of Basel": "https://docs.google.com/sheets-images-rt/AEjM2AwRL80EGepv-iuvx9tGbFb7Qt_dHh5nmF-lPTiR_Y2-QfJed9lFlrgYDiJyb-ThcyWtBGgWTt0sDJJRLjtmnZ3llwBV_Hwfp7v6tE_zO_2h3ev5IixovXCQAYALxmciwRe57k5SAaolqCtfpPQcNMQu7OzmZ_ZHFlUyOg=w399-h221",
+            "Al Ghazali - On Intention & Sincerity": "https://docs.google.com/sheets-images-rt/AEjM2Ax6-MR76Ml7AppV0wW9iS_51PtTzKcbSMj9tg0QQE8XEMcXocme37ClVixZvEeTR_VkA0RiQcs440oOHxRvR8kOVpIB3JA7INaQySCWXY1ruTmL22jnREJUilywFjBRBkjp6Jc5xEwMz_2HSLS8Rlg5Gx8IUloHfmU=w399-h221",
+            "Alarm Clock with Sunrise Light": "https://docs.google.com/sheets-images-rt/AEjM2AzCFSR1koQssPXtWKL6bdqmhIagWzUzDEwpymnd-_i5cyiDngQlTVg2LMw8nZ2vqwjn9-pxDXZYBfmG9-sKQ6dURQ4R4-8lQ0MjofDrdXynQDybJpx77enYwvy1vSti0QQa8K0Qe6LzOGWhF9ysfHQ3UbIonIdZSQEN-w=w399-h220",
+            "Assad Nimer Busool - Bouquet of the Noble Hadith": "https://docs.google.com/sheets-images-rt/AEjM2AzkAJ2HVgqYI2i0CBcdYUFiV6cxx-_1fH-g3Pqj5S6rENDkT52Qiirkx4rss18ZxrARcVunGiR1k9niCnxVJAtgwizQo1keHaJPHusgyevSqStuSYCBC7xrRtlVY31fb8jPI1vVYBcbbmyhn7pe19S9TWyJJ5AKFP5fhg=w399-h221",
+            "Assembled clothing shelf with 6 cupboards": "https://docs.google.com/sheets-images-rt/AEjM2AyCjAzstzJCDpw30JUQastUgDNCrxj0pnA1ndEvCyWrqhLW_1cX4L4gb7jlTORWgHMdRt2wKmCc7ihACpslmG0y5uR_u1f2AzovyHZYAjCwE8kIsXLZIEV61GxVgPBcouN6Nu7SgbYun0jyFgyXfYTWjmZ_HBA-bU4eFw=w399-h220",
+            "Astronomy: A Visual Guide": "https://docs.google.com/sheets-images-rt/AEjM2AwkhkmgNj_U2CF1bU5Rg1_xm2HyDnPZeUGYHmbjOJ66-0AmDSgI-djTKdgOF6QnyhxaScBf_pNn6iXgL7cAp2wVP4wOXxk5oOALO7Lz0z6PXkU8lT7_8nHLPOCMU9rQZs7ucBjOJf9-q-iLnEideJedFkaIFr92Vyk=w399-h221",
+            "Aztec Coaster with Aztec Pyramid holder": "https://docs.google.com/sheets-images-rt/AEjM2AyjrPkrd4edMV8lqRLYq4Vxcii6iFTtu4ZxSzUePqOlFRgbIbYxdppZkAsZXNvKdCCZ7YSxDWQXoEClw522SGtZOKWbNi9NpPFnAY5wFfBS0QeovmnSfy0oTQi4pP3wRvQrL2A9otKflRROsluqbCbUENBKsy00znhG5w=w399-h220",
+            "Barbell & weights": "https://docs.google.com/sheets-images-rt/AEjM2Azlk8d4WNCz25yTvTbrc53Gl5_7E7LcNQjx_yjz-VSeTK578lz9rpVJR32OHPkrCoQ9jvFzDPlSMP-sI32BmcO9mOu03-hP2qN__DHRUeLS1TgBtaYvGht6n0Ikp8GBGHpdwqcV0vPpAh_GN5Q0vKj-euRUXscphePEEw=w399-h220",
+            "Bilal Phillips - A commentary on Surah Al Mulk (Tafsir)": "https://docs.google.com/sheets-images-rt/AEjM2AycbmYIkxwSObHPLeZc0BaLq6bzz2hWIhipM7xslBHHJ-n3qBsrnya9dam1GHwP_ryrWmm2US6uKATMRHLsxd1RVFHheem64MsbyCG2_x2LJ0708zlpW6kVkO-G2UWHmfnU_mCPHntmEFK1RoChNw5FJpSma8aCo-k=w399-h221",
+            "Brian Cox - Forces of Nature": "https://docs.google.com/sheets-images-rt/AEjM2Aw2_2FZ4cgAd4hh0AE6StD0-7iz3iLIw_sTW45COz_J12UPAK0smyiz1fuIx1sXX3oj9TBhDYfBSm8HxXS7ESnJO_K6RKHRqkFDq7gyeSPTEdNzKjuSeCDwhltf69XgPGPGGdODpXC_dGMGqr4TpKu0HIMLlry9Mm3hNg=w399-h221",
+            "Camel Skin Decorative Table Lamp": "https://docs.google.com/sheets-images-rt/AEjM2Axx41drez3uW-XJybdeFE6krasxjyOQSmUMql12YuVnKm42oA0w0ugI25ljPyY7nKawXslOximWccmJz5KzFWV0uD9allP8jcv2ZqvOTAlLD80PQig361UY-ihWVyaLK6GyrE9c2zY2JMPrKe0Kaxg6WaAbQNq1o5bQNQ=w399-h220",
+            "Citizen Eco-Drive Sapphire Chronograph": "https://docs.google.com/sheets-images-rt/AEjM2AxcKNc8z2asn4vz0tle8j81l2X-lcTEUobCf5rbBnVb5daF_3hKZ1uX7V9pRPRO-Y9d7eULbNnqdebqXMgUStWfnBtbb-6yOr1Dsb29JPM0MZCd81qbeX10Q6fRm2PzB-zYjNOmWVclD7U_UH3JLlU4AT79o08HNj7Vog=w399-h414",
+            "Coffee Maker": "https://docs.google.com/sheets-images-rt/AEjM2AwneHuMa8wmrN5Ls2Hkh-Bs9xGzyWeVTfsiGXR9axVTv-v9UJEvCT2JP7L3ouOvqpK2kIftzP6Eig0-RpafNwe7YNxE8fLEeTuIdBMxtDTDmQ7o9Z6TEunEF_rYoIiPC6bV0F211covog-N38XjP7T5M68zcJf0MHlYug=w399-h220",
+            "Cube Light": "https://docs.google.com/sheets-images-rt/AEjM2AzUoF-VdTxsglnJiqVO791oVQfmI_df_l7iU9BQlS1mF2ZwuRPFA9IlpsJrTUVLGogGxTDniKc7nL9YDED0sdNFoLkL-LaPUKVuvo_dxzJXKs1et3lfH94rOJZBaHSG5-H_ZkR1xmru5T08oD9hD8pvMH7mWbr2ZSIU6w=w399-h220",
+            "Curtains (green)": "https://docs.google.com/sheets-images-rt/AEjM2AynHHzpMNAov-bxx9xYttV3XHHTmgn--QHmadFNtaaV7mNchXsk-d2pEbVjcJjUA38MpZrAOe4u4pQnHP3hBlR3vgq1CVz_EpkX0NjSgVA5dYY3J9B_FuiYBnc5marMFdH8n9HpjngbQE_qW1rpHTCkYhahvgKgkYbvZw=w399-h220",
+            "Curtains (grey)": "https://docs.google.com/sheets-images-rt/AEjM2AyMWsrodQmlp5qJlFFUPykCsRNZqiXOPjXCcHwCa6R9bm_GYzf-fcvcQ5wBMgQA7AQB6dRst4pdm3jESa0TCRg0BAp7wdG21POYbwi7UsC7JlSNxJ5Er2H3XI1pPNFLAczzXtJ_csCP8tPeWGQeZMDlEgq_QZvm_64=w399-h220",
+            "Custom-built Gaming PC case": "https://docs.google.com/sheets-images-rt/AEjM2AxsPYJD1cwJhB1GEsw_EIdrFd_W31z9PdzwHNUif_HkVqJEGT8T5VeYzUCOaYXBWENnGS01kPdMdYXGBL_PfplsYvD3OqS4-cN6cL_dFnPK5FY6KZY_2m2oEJI-Ltfi6E8SiJieIea2aOexA1y11tde1VWxqplhyBHbqQ=w399-h220",
+            "Dark wood magazine table/side table (Oval)": "https://docs.google.com/sheets-images-rt/AEjM2Aw89xc-13qTORoNatZ_Xk5nFGTcyMpT08E5HIdNkaut_Pz06UkhrWbCut3VvrHlj7Y1AldJOPz69r0o4Ml_xw69x2OuU5786rofHCP1Y8MitQOwfOH4-XsitHyN5HpvAuYSkQZYJXrg6jvU6C9nsP9OAomyMJ9IfVZh1g=w399-h220",
+            "Dark wood magazine table/side table (Square)": "https://docs.google.com/sheets-images-rt/AEjM2AyerpJa0-f0wAnwU4xLNv8dmrxSw_IGho_iGY2xbqU23UXnN1SJg5BIU1BuqcjV-VTxzaBt49QpY9bajWAwwbLIVbiZI7MJOHqQ0mc8BSsymtpRe-A4r2nCjJO9nibQBEE4jP2qcvpuNdlvz26BDyY_MYiqVFdY4NKHKA=w399-h220",
+            "Dark wood pedestal table/plant stand": "https://docs.google.com/sheets-images-rt/AEjM2AyeoNkHwtvByYqeF2YxdjqEXNFSLQxLtLkz0tOx2gqgFX_qujw-yDY-xW1K40OXqGZ0tS959L6PRKezDcmrd-WUaWcCbkaflnvgMt6X-D8GuRsjLq1jdR_CGU_Cqa0jTnbTDMCejtFBqUFRs4srHaPrZ41gzcG9M5aofQ=w399-h220",
+            "Dawlance full-sized fridge & freezer": "https://docs.google.com/sheets-images-rt/AEjM2AxsGj6UP1fp2nZ0CM7Px4gJy2fo43ep7JReMavqanSy8NWjmdxzoqbPfk5BASeZ1qfS2IXQPagwhXcVVKzsTvTm37ZR2rEMa6q9HaYzpt2gqav4f4mLx80OgvdADQn0sCnXpNBv7UbDirl-9nrRcrnIiEhL81GBuVHLZw=w399-h220",
+            "Deerma F500 Ultrasonic Humidifier": "https://docs.google.com/sheets-images-rt/AEjM2AyRJPdciXpNd6ljokxgSOhe3AI5MfXFv3EA-42DLAKEFH3kMWMp5NwVCTcj95kAs2UI17gVQtFo8nZkRHM1ayk_isUfUvMCwfg1aFhHc_3TMsz_-TwU8fEeGFA4wFG0nZNdaIloYxEidhAl7M7kuV7Ggn6NgnBQNcL8mQ=w399-h220",
+            "Dining Table with 2 chairs": "https://docs.google.com/sheets-images-rt/AEjM2AwDyIGx7CaySurwM7Z9r1bH75oaV0JDTcG7ZzOcCUT6BD48mDqHkgMyBJDQe8kAJ92zBu4xiXBOfGUVdC1JVoDxqTEmXlUs0RtxbgCJt6_Xc4FGnk3QFsJU-Wsj70NHpf5KW1Xm97Hl-qoaMpQ_TgtcX0vUvht2KSk=w399-h220",
+            "E-Lite EAP-911 Air Purifier": "https://docs.google.com/sheets-images-rt/AEjM2Ayyv4iunCd7A8Z0bzTJ1H2THZFftlNMDKnasD1zngRSamHd0uAfWsBnylhteZZb2ePNQkp_FrUbpuNvbawwkwaGb1wdHmOceEZKhYwoD6lIZp8H1b9KMgbTY5uoOplyWizzSuAH8wKNvAgYyvyJUsJAuqhXC1FNxGCDlA=w399-h220",
+            "Edifier CineSound B3 Sound Bar": "https://docs.google.com/sheets-images-rt/AEjM2AzpEfNiS8t7OT1J9Vnog8esJqmS9jXGLi_-EMrDNbY1NSHDtm8DCwN57HcQ_adnHCKgufCC0PiHgsw7F-2xTiPABIrAa1AgicUz9N8k4BmpiwJnJYB5ZclRs3teSh7Zf1yt9mcAfJA1Y081U7x7yHgUpGqcuJIlkBaJ9A=w399-h220",
+            "Emirates Globe of the World": "https://docs.google.com/sheets-images-rt/AEjM2Axcusm7ltL0grBm-39Jd2w68jW2KW-hhjoLNFR3UVySLAaix_CsfbTnFGZ3e7Nu_wI-YLMfazr3YNbOXF4UGH_Jf-gmXs303y3rcQ7Z9mnm9bhImPeThrG6al1HpC7uiwD2J2u32luQAaKWTc29sUJ33ds56s38yrM=w399-h220",
+            "Firas Al Khateeb - Lost Islamic History": "https://docs.google.com/sheets-images-rt/AEjM2AzA-gl_OMGrseMoAbghD_tXFSZGp_3TpZRj_seKGBoXBUAN4ZuZCRlbwhA42cComWoPxESmC-GWYBd049Laj0SAwoGrlizRb5RB9G0Zra1XYdBegLmaVv0FdXmhKSJRjKvNb1ndNupTdRVCHXFlwIfRxdEysNRu2XXE5w=w399-h221",
+            "Floating Book Shelves": "https://docs.google.com/sheets-images-rt/AEjM2AzJxA_wNZDPzF-n-EzZ3TX5lcIbH94yvcZcWUaayoz3_SkJ2_5TblaXHJQtwVduWeAW6k1RrXYeZZSZFq8OvTyS2bhoNPOq2TnS04RSv7kBT222p4BuvMyE6wcrnZq86XSeHOgeJ4KvQ0uxtqnN6DQ7tTb9Aak4LLNLeg=w399-h220",
+            "Floating Shelf": "https://docs.google.com/sheets-images-rt/AEjM2AxiWQmOZ12KYxZtxGcnGvyrcmwaOvgqLCYM0J87fcjtRfCchh7u81YokpLurf-LUgj-vre85b3NK3FQiVBo1IGhmOKiNThEchfy-r-QianLxB3VH5zRSO0V2btAli1_Yq-Ui_p7zSXNYD4vaiGroQYb25nG9YAxMnBOOQ=w399-h220",
+            "Franz Kafka - Metamorphosis": "https://docs.google.com/sheets-images-rt/AEjM2AyrMUW_u-DA2apifabmtBKBCb20LjZTjzY6WpfkUG-7yvmT2HY_YneHi5NdwvPAas3N7jJf-0hLLmJvDev5h7-9OT1eF5P7Ja1f9WHyAzVTZC-jyRDt6woUIb3RSAS-pWeswJqMe9u4tv5hILfjW61ML2I03nu3juZTtA=w399-h221",
+            "Gary Vaynerchuk - Crushing It!": "https://docs.google.com/sheets-images-rt/AEjM2AxzRNg3kPC7Z7E1LP86rYTud6GB_o7qjLS7hIpOIIrUdxLL2hO2x0UeGvMBsiWLG0mdt-Z9p7QOX7arlLApKXWo4SxFSij9_AaqV0pF8Wo-mPf0ra3jmQ5DNMiWLsJm1yfKs4_w8Sb94OtgGFM0uHaMhpb4b2ReZXJmvQ=w399-h221",
+            "Gigabyte G34WQCP 3440x1440 180fps ultrawide gaming monitor": "https://docs.google.com/sheets-images-rt/AEjM2AxVlMywANciUDIq6cJ0WoYQbEXVe_zKc6OBRhFEgP6HQlagayiPBvXm8-CDwW-1J6JZeQhi0jHhU38r07axKBREUdJ4lfGWjcLM3unqltZd6rxzTo7BJ8LRquOgVAlmOE7_HXEYIKcY-7vKmv8vHLqpxdZ8KHv-FvjPkQ=w399-h253",
+            "Haier 1.5 ton inverter AC (2023)": "https://docs.google.com/sheets-images-rt/AEjM2Ay_mkb9a99ZVlW_QoOG4ijPyUdKm2tsv1Xil6-vR6OJHbyNZlBN0rXN4nV7IfCrx_PZFLk-r176RtFB3UVUqRrlSU0YsAcgmHWBD7q9XesjAqJnnAF7PxnQWIiN2sqOp8NiRD0NDxRGtaYoJMOp79Kq0zFTec_4c8KuLg=w399-h220",
+            "Haier 50 inch Non-Smart 4k TV (2018)": "https://docs.google.com/sheets-images-rt/AEjM2AzfOv3Tevyzl0MQ7IaoEGt18n9jBmCTtV3gO21V9zGkFoCXUKTIpq8ihrwhenE1dmY9Z4gTha9t8-qE5xoj1FrYCdjLCD6ZedIXBD5fp4XocBJqMPADzo4xFivLAzryhd7pcKuYkmiyWFBBr_29JbYyo_OoN1wmIfM=w399-h246",
+            "Haier HWM 100 series Twin-Tub Washing Machine": "https://docs.google.com/sheets-images-rt/AEjM2AwtThG5IKfINakdogPc_LLjvbkNWSifHK-dq_hdPry7QEs55H8WGQ3OaAnkGeLNQWEpXFkFpLGx92M8smf-QrYaAOQ3U4o9uGqICVZex_seyHSl4qRTEe1ferkhltnz1v9XIrshy-Ru5g0KmZdU3_gCP0e33CZZwoL98w=w399-h220",
+            "Harvard Business Review - Project Management Handbook": "https://docs.google.com/sheets-images-rt/AEjM2AzMwiMBTL0jyEkzB_2cY68Grt8KRPUGl3DO6OEw-hk6dEq2dsUsRvkv1Z1BaJ_lz9Ioz9zzLjk_ddKR2H7yHsni5BiDrgWhhcFzdmV_b26a4GJ0-fPdEbilp3GvSGN0Iiu0ORp7l5Z6nNCcYBD1P6TEmtBWF8W2AZKOmA=w399-h221",
+            "Homedics Therapist Select Plus Percussion Massage Gun": "https://docs.google.com/sheets-images-rt/AEjM2AywP4onoX9qMyH3f4B0-LFQ9X9nVsBZl_YDTsx6YhBMl_V2RBaPGsxYLbZM5ZBmsFQAhuEqXzl4fPLMRDZazZs_e2zSyabPHIxo-7yx32ddHGCWyEY642pB2Sab8lcS_WlvNTj6FXy73-7nuRZLeuFVc_XXkKgZDP6nkw=w399-h269",
+            "How to Read a Person like a Book": "https://docs.google.com/sheets-images-rt/AEjM2AwSPps53jcuOyl1ZJOUCM6xFUlpG4S93agvh5-iU3iUiKh-Lcae4Eyi_zqhtrzS4n8_zbD5d38SnFMRtGkFPy5MskCb1OOIUnQlE4olg9PICve4VYf-Xy2IcaRTwC9bI4UOrgPIaKzj6pJGAoudBlnGardrnmqjFryuqw=w399-h221",
+            "JBL Tune 720BT Headphones": "https://docs.google.com/sheets-images-rt/AEjM2AxmFgPXo2B7745ne3gQBTR7OctUqGeqlnX-bRcjfqWQtvU2qeg6TDai__rthn-pJMWIlLCBiuLCuc3HWcvXAb20wCwo4HuROmGiapKiTcoA4uh52y_FxUKUGU9y_kJUltlsse1HW_Q-m-zbH2MOYUbDlpbNUHWWe4WldA=w399-h269",
+            "John Perkins - The New Confessions of an Economic Hitman": "https://docs.google.com/sheets-images-rt/AEjM2AxmcyEjUh8WvBRzxA3UGcnZscEOjX4sK8vmKJHDuKdJeebL6y9Af0NmBlZ1J6OZ1GalxiBBdSam3GQI_HXRP3AAK4XLVkAZ4ICBiNLFB2ByL4r4vgE6nllAs5gA8j2Y0fsdyWvUlqxmlvVRTU-njEmCAlHdDltBNRM=w399-h221",
+            "Johnathan Black - The Secret History of the World": "https://docs.google.com/sheets-images-rt/AEjM2AzpMxtC4PKAxTyFYsMdViJ29u7gOPkF42-eItsv8ghF6hgbEH9Z_wPANB6ad4VUzDRbcOkLg2xTdZlBdJ4-tNu7L-mRGb334uoE3lTlGVseE_gi2heU8MQx7zjtq5BeDAzHC8vOktGkVR5xPNwjIj9xxCQiv1agHs8cXA=w399-h221",
+            "Karcher VC3 Plus Bagless Vacuum Cleaner": "https://docs.google.com/sheets-images-rt/AEjM2AxwclLxXHRJS1ovodkPb_CnLRaTCexx-Q4ALT6TjzifLiMIN3pmB5KH-prGjdyqYCsPwi8CDv_PH1tN1hj3V1aNphSSVFkRZYlGVQY-4P0pl37SDDahrq8A7Qif8xNgIxmFp-Xa7VyfpJzN77oqyo0XszyA6nr9-8x6Uw=w399-h220",
+            "Lava Lamp": "https://docs.google.com/sheets-images-rt/AEjM2Aw16eUOVmF4lQ9v6Dtjzix7PrmHSBA4eXcddVn9fwPpyQdcYquu7bZkuTegEisZ3T0aoNVppNlz3eILTq_1yM-VeA4RH5Y1JAjmDerAC3-Le-06k5A6sAlyVvkKoqjpzBxDtzlrsQ4ub4rA2UaGvrHYzlAb9oTsbmtZDA=w399-h220",
+            "Leaf Blower": "https://docs.google.com/sheets-images-rt/AEjM2Ays-cdQF0PcKS05ewmDqZNiU5jBwp1c24pnyslJ1ZWFqS1WeZ6dYbLVEGIBat3GUdj9gJ7DsmoZBw13kVrCXwpv5o3o08Pqg5TZLAmHVbS_TEQvDi7hgmHz_gUFJXc-L71Gykojbxi_eD0w1go1-sBrWKTPzG_R7JO02w=w399-h220",
+            "Light brown wood center console with a shelf and two cubbyholes": "https://docs.google.com/sheets-images-rt/AEjM2AxGf-5iNiZeI5D9Lb46X3QSpTsrb0OV_VMRndvb70NT6SegV-611wzYPgCWL-ygBRhDDDkrlyS2jK42t7ZxWXfSBg0n1IfVLK6nUm5c_sci127dd-kkkLx04GtEv6TVIzbhCXQ6rocGSphj6TQzF-GY07BKYVCQBzsCsg=w399-h220",
+            "Mark Douglas - The Disciplined Trader": "https://docs.google.com/sheets-images-rt/AEjM2AwdDSQeQbkUpMKSkyOPylNqDHMWMtnEi0tztzrQGCW5VDI8ihpz6vt6eV201QUS8yS9nYCfogrEYsTWiQ-TWQeKiBR9VyhrBKsw3P3hBcS_9mme8DNP3hnq2gXUm_dJIf7fIvRHjVSXJrrFgXr0Dz9QuCiM5yRY0J8=w399-h221",
+            "Mark Douglas - Trading in the Zone": "https://docs.google.com/sheets-images-rt/AEjM2Awn9t-tPGeAVsylYEGC3TtQoX5SQVL8a-gPgy7JsnBc1djq349ACCsXT3OFAeMLNJGQqSoy54PyyLZurwmbIGOKIoVoA0HTD42hT9XKpBH3Co63xqEYa3Km2ZJwhnSoAfPIFSZ0Yiom_xIa9pgQBU00bPEotnZCdD3aLw=w399-h221",
+            "Naima Sohaib - Allama Iqbal's Though": "https://docs.google.com/sheets-images-rt/AEjM2AwGihHR8Rb-T6M36N3YFofrTvReAA_TP7dEpPm1av4-zduo3DgV3hJPvhgLRramhmjU8XP4kRMudeqH5Jj9n2c7S2Uxh3V3H0Rv5p8LX5RpHKBz1_TqxyVX8XpK14lXpBa94qbQpC1sdzBCulFNfKiFScR9amLDqZJWbQ=w399-h221",
+            "Nouman Ali Khan - Divine Speech": "https://docs.google.com/sheets-images-rt/AEjM2Axb0nNqo4tMt9d-x3czUdrzXoYKOJLW1w0_ixRUlh2g6tOsgkA33VR0aNQhDUKpTBbXRwYSy4n1DCEeTmjbf1wLJmgg_JPujeyA7eHCfRtC6Sw9C01u3SXqhc7YUUsL0UfdVvxuSYr2PtDHWgrrLFTRslBoRnxNgj9LgA=w399-h221",
+            "Nouman Ali Khan - Revive Your Heart": "https://docs.google.com/sheets-images-rt/AEjM2AzMgxXaxUvNgG0DpuM8WaBgf_9rNP0ia7-0BxlgXL-WcmfFpFzsbTebAZ7UzT3g4skkfHPA6Jn2h6wxEBeGVOlr0gVIplsRzlsVesfnZs8H1JjzxR8nvpCJ-k9FsJ-NOWitQt3Cyp2Hhk6JYKoIVckZM-JvDAWc67CymA=w399-h221",
+            "Office desk (Corner with curve)": "https://docs.google.com/sheets-images-rt/AEjM2AyyV9tjmbfHh1y0iRPBUurjEyHYd3oYYuZxvH8fTHnElRVzleaAVXKYhAFQ7-pE8W2Y05c3Io8l2bJxUjGPKQv6hHgbN9os01kffK64WQh9QFYRDUeIw20lUNsxm5bFw2147MQ3EghZ6rQNRAsO7SaswlO5Ze5KwVegpA=w399-h220",
+            "Office desk with 4 shelves (Rectangle)": "https://docs.google.com/sheets-images-rt/AEjM2AzoqjL6hi1CzCaBnJBeC3yI4ZDyiQDkmJoVXR0r3ziZ_wEuoA39nEt0rDl3ZI0aJjJClyC53L_RTd-WR6ixYXaM-DvnjWQouG1Fhjz93DcfcLuNULhjaj303DHqbn6vuzO_gl2E68uVKRBkOFMCA_Ojdu3SqdBMOlpSyQ=w399-h220",
+            "Paulo Coelho - The Archer": "https://docs.google.com/sheets-images-rt/AEjM2AxKdR0nSwkcJ7egyR1blCDVpNspGjdj1jCtQJBrkT8F2NlK3XPlJEpacDaafX6jFSyOIdQ2VC8t6_mk-ejfb6opo0IkUeLntS_Qa8QtDxz1HDhlLjRfDESIm3qTbJIcy5BOXAw3TwY5alnijf8wSTZaHsqtQ2j2hmY=w399-h221",
+            "Persian-style Carpet": "https://docs.google.com/sheets-images-rt/AEjM2Ax7i0KRX-mdEnXoK25znPRXcYXyZeOj81Mt07IrOOhLKTgQXIK16wbjJyD53X8Um9lQRwQF-q6uLpkxy7TRjmFKoqBXsDNuZTRqOMmT7ijFJSVqk3ViGPyDJwTN-f2XgUY1rM45EfvaKxPdmySPX3TRHLoEmFvPK1RCjA=w399-h220",
+            "Plant Fence": "https://docs.google.com/sheets-images-rt/AEjM2Ay015bGXvQHiJJr4B_vEGQNqhUX0r7oIq2uEjy35L6qU48nvu-VuM5Dj842dhFeBIgyG1jf4Etqz64R17n2hEOYVgC6t4Gv4wGQO3FVu1RK-f1DQoWJ7bJ3aUmkgdjeKo_FEae0r7Wom5Vlb6QcNrzn2b0_1ObjmLM=w399-h220",
+            "Plastic kitchen rack": "https://docs.google.com/sheets-images-rt/AEjM2AxZUr3ajkx-sVYQJo186if-AXQNNooN70mN3EtqY3XQckEFil3gZq88IvFIzh2UE_OZliH69pGw2-Yc7Rpy52Zn5NnSthaHpD9RZ2CNOJZITTnNB6Gg1L7pME2VeRR8Dp2ReDGRwczcnRx8cwr01bCH6cbxaqHoY_Nusg=w399-h220",
+            "Plato - The Symposium": "https://docs.google.com/sheets-images-rt/AEjM2AyoXXtPO3yQWalpT5RfNr5r2vlCl5uBEA83Ioxt8hXK-alISnuOeszhwdLEfD_CqULidqU46hG1s3zosh0MolU0aGCwE-0TWuz1BvmyEP4QSNSWY5BnBK-npXaXEH0MN5p2WYCtAjq-GamW5PFTwJMxbJXmhKgHGHiUhQ=w399-h221",
+            "Pull-up Bar": "https://docs.google.com/sheets-images-rt/AEjM2AwdNvb3NQhnyaYrJ8k9jzjQJsepR3CGmEO0oNHpslpw27xV-PQE_6V6ySPnJr4uPmvaAkF30N8fk-zRdCb9X0GPB2pVkV2D826OkzNnBTtRMmcNg0xOqD8Fjtly3UXZaf-u49sPoR6qlDt0N6kKdjln53JGbjPAaBj-Ug=w399-h220",
+            "Replica from Mohenjo Daro": "https://docs.google.com/sheets-images-rt/AEjM2Az4_nouOnnq_wVBrodk3WALq8s8-J4u8Ijkxe37VV1tif00yk6JoThwmn8iTIj7MfM1Kwag4F8qzYcw2XVenKBzwF84B9zeQ-2opYzOsNPx3lIPMCVA8CI8HdkXSKs-EDDu-QykGtizg6CxlAUEuMv8S9kDh7XSSSQ=w399-h220",
+            "Richard Campbell - Dark Psychology": "https://docs.google.com/sheets-images-rt/AEjM2Ayqf1SSSUiH4LxBtgH8NaXcx2jonIVJlpkRM7dRsltCJaR5VmXy2Tb9Q8a7hfFJMr_e9HirOy-cTDyI1REkcRJMljAHufoyN0ArpSdFRur0MPr0zm5Q_rROlAqCxGTcAu4vnIiOuUsQI5iI5ZcjfdLX4udG_gzB0luloQ=w399-h221",
+            "Sally Franklin - 50 Ways to train a Cat": "https://docs.google.com/sheets-images-rt/AEjM2AxsLofm6wySTTLZTKwDUmxZrtc75gzRU4ObK5zAACc5og-v0tQVAS5F-6vBAqCaB61mLdHcsGUNIPRh_uMzapdjw-jdrjSLlNN4tYlPCiNCyLL5_MxzsgBWozxmbs1pOSN8TpO7Hbbhzh8AK0S5JFdMoCEoKcFHcgysgw=w399-h221",
+            "Salt Lamp (Letters from Qur'an)": "https://docs.google.com/sheets-images-rt/AEjM2AwdOFaSch4gPQyLIpqr_zXL4z868RR0rm0NG4Oj7QCV_wXgVAWBIbbbudBomYcm7E8RRnAf4ooyySEzlF2PPrJVTxARPv9hz0RNrLo-rmtS0CUbHGo7glcAdqMMTN4Cz63mCZjOgXBQzOcU1CttPxw9vdfMKGfYdr1rUQ=w399-h220",
+            "Seth Godin - Linchpin": "https://docs.google.com/sheets-images-rt/AEjM2AwebjUQjOC1xMtJtl4gtsItlaoPzvmFOawil7OLQZGFtsutDypfkkTaaEgu8DFptTOLne0vwoY62naO-fd5Lz7HKrNWuGeMZ3Ap6V4Bt-9TfNsJwN4eZh8Nv57ME8aXrPNJu97So9K6_X_RmpTK4dn0mLlQty122QHFYw=w399-h221",
+            "Ship in a Bottle": "https://docs.google.com/sheets-images-rt/AEjM2AzrRcdIsh0uzoa5JVL0IYyY8bpppUPB6Cwji8B2Nl3std0BbEvFZ_LZlkFivCGQReMtPAU6jdijdn5IlSdCbP3vxJJN8_GZHXySJYvt8nyPICFG4zTTmet0PJytjTfwtlMYFK44AyCDlSBtJM42HA9w5252dkxiuOlPoQ=w399-h220",
+            "Single Bed with mattress": "https://docs.google.com/sheets-images-rt/AEjM2AyUWbcZO89xtPOjTX2vVxT4ivW-xqd1QrF_o6UN8okKUWwAAfbf6HV10O-SCE_rgfn-vZ-gA39UIBzToKJYqsDbG9NGwIy8HgyjdHyhoCpanHYzV9BMc2AOxsl_tPhA2SDsE0Z3mUvz38VZb3VO-mfFOTQGV1YMH0Q=w399-h220",
+            "Small Paintings with frames (city vibes)": "https://docs.google.com/sheets-images-rt/AEjM2AyZVw147qcC2mksy80xJ_BWj5Ewy8_MvfonAotd8jIsxtZ-xrFRCPCgRaKAhMw-g6diGSODZXi_qCpkY7tO4ibNtA7IVsVkJgzc-D-QHQs-KNqd2UKB8eetd-3DOjE3TYIEBkdlelOVP9rJtxv3fPxFNb12mCvqGvTiWg=w399-h220",
+            "Small decorative plates": "https://docs.google.com/sheets-images-rt/AEjM2Ay9dP-4AXYp6hI2_diD-v1b-JUYwriU1MJg20jbjEaUtb1ApWsIKfrjcFSePOA03cKTu9Gl0CWYDqEh__8mDUL-Oc0yx3AtBqMMUMiWNRrOmyFi2alsp2JOghfEqfAkCOyN3EY7JTdDqyL7FoLBfemEkQmgDUh7lPA=w399-h220",
+            "Small painting with frame (Allah)": "https://docs.google.com/sheets-images-rt/AEjM2AwZHRRV5VjKIfac8IIheizEYa948mH3puqV-LbHX8-kimm8VOCskF_CBaT3tjTe3MHJCQkysSpjDtd0UcResRrVm5dUVocjRsf_jX5eTIbF87aSef337d40_QKGgJti6X7JvRRqpFfsqAgOurMe_PPbsy3x-zaKhP4xxg=w399-h220",
+            "Small paintings with frames": "https://docs.google.com/sheets-images-rt/AEjM2AzNPMrAwFKIj9JRiyOE_gJ-QDQlaRTrFTWv01wzX2kqRVVBMnX3zl91QlXn39x-fjBQsQqyqHKN_t-W0TC9oLvvmBcEbdNHmGDcGxUNwMt-7H8hHtpZN20Wu7m-6ViU61tXTNO2vz3mfiXj13vRVL81RAkm9cXVWk3c9g=w399-h220",
+            "Standing Lamp (metal with cone light)": "https://docs.google.com/sheets-images-rt/AEjM2AzR56hfCSILLk9SFThXUeOkuv_UbI2T1fZxpbaiaULK5x7_WS4OLU5Svpxf3uYDyC5Un6ewtBx95FB8n_o9_TSxKZzbCXUvrCdJzKDwKy1tXVYHD6xHYJdeglaMEfCo7jkKiVZvc49RWtCtIQreRB0qXzkVX0bOjtFd4A=w399-h236",
+            "Standing lamp (pattern design)": "https://docs.google.com/sheets-images-rt/AEjM2AzoOZtNtb71ENhTL51YafwYcKEtf2okJkoOjWXgnzkYNcDGxFt_WoqCirlpC1rx5_rG9pXjPxHmMaNv17OfeWXebTF55M_YKtYtaNje5Nyfd5f29337aOtz1EFVfOHOVbSdjDB8J-nz2W0F0tgxSThINZmy-HWbx7c=w399-h220",
+            "Stephen Hawking - A Brief History of Time": "https://docs.google.com/sheets-images-rt/AEjM2AzCZ3sV6Ny0OYg2uSJ6rpAo12c9wd2oPv0WvAUECk5lRZeQcsdcfrJsoH2IogoA0onQjuVFKEDKHBtrm9qFM_JYamGhsYfcXDVfmfROuwlfbuJ_EKNnzd7aQ2S_jUV8V4Ys0zCwxH1LK33CQGxAGnTvGTjKk5Maw0Ewiw=w399-h221",
+            "Steve Coll - Ghost Wars": "https://docs.google.com/sheets-images-rt/AEjM2AxhyQplZHPiRZh_pk-IsyYsKlMQx1w4Z7kEvpKSPSsZ30PGwBZI9Lw2ExR7YgmMTFLdCuVWj_GsiODRnm8_OCRFePjGpv2rTkSnIR-dglMfhmaw-6Taoupd_mLyXwuTGLbGS0r2UU2RmIXj6pw4dHzEf_ibc_qKg4tuBg=w399-h221",
+            "The Golden Age of British Short Stories - 1890-1914": "https://docs.google.com/sheets-images-rt/AEjM2Ax1Bh7Ko22qz9bqCjvSoD5A9jKKUXZxd2FIVsUfHlW-RtCY5WfH0SKatv571wmgDZdasFh2WJ0c1VBZCxhuc9tKyj6fQqVlD6agcnuRVYKFJn489wpBrFUJ8v7KbnRRh76zeZkTP2pbRwQnwE6voxoJmq9q2nfFJWw=w399-h221",
+            "Tissue Box Holder": "https://docs.google.com/sheets-images-rt/AEjM2Ayds2c_ncxmX96gNscGPruQRkViq04kJCAh3yYWQF3pc1IYcBms1OipE3C1K4Lexo5wyhsMPUzfcSN8zAf3MOYgu4ynZBMEM-5fVBuEczzVncAa_dlmOT9xeZ82iOMCRNMEMBPnawo8k43IIPx5AC6vr-6-65pxEBw=w399-h220",
+            "Turkish lamp": "https://docs.google.com/sheets-images-rt/AEjM2AxuZ-jqBrnb9OGQi8FUtbs_ztRMN_ht2ubKvU5BETNEzueTezkgHtM6tIxREJCKN0cPr2kcCqIld1DCoLytxxKqhmob3sApjdBRXznl9HIVl3c0qsgUS5Hx9VkeSgkCup8wnPxwVXipwSmp-u0hR_uKAKKeJigdIn33MA=w399-h220",
+            "Vertical Painting (flowers)": "https://docs.google.com/sheets-images-rt/AEjM2AyZph0M6-wzUPB0NI8rB5DslWTbxh2c6th-04kOQThXGUJD9cHk4XHVipsslQxREb1KHCZV8ieql1NuLHPlO_djocjcm7mnTtQ_clnvjhhyzifClknuz_ajVqKvXIEONfhKPAB7KHyW7u-_JePUrJtNCKuKbr2sBZXHGA=w399-h220",
+            "Vintage clock": "https://docs.google.com/sheets-images-rt/AEjM2Ax_Nu6X3e-OCSnA1ek_eCR9np_P8-bk7CYTZGI-J8xcz-gPeVRixMaq-JHGeASxHg2q41JTyrk_26T0qlSJlq4LrklaRHFnaPEBH38J33O3NmVk9pxNy9GdcWtMDYFf2pJ3k6eOQRh_57gb_H-QdaRY0VXzO5oyx1g=w399-h220",
+            "William Golding - Lord of the Flies": "https://docs.google.com/sheets-images-rt/AEjM2AwN196lWSVri14iasRuVMpiDNLFlpLfhRJNysVmUCNWgZzwvtw_1aPG5SN9xfwoqsvm0CMDkiwzfx2uNWdb1aYj7c5n8RsrGTXHgJ5vLxpDU9JVVz7L0_qIwiGn5PAL6EgNB8QiUUbo9-jp0oCGH9kCEkK4GPa9QhOgfw=w399-h221",
+            "Wood end tables with glass surface": "https://docs.google.com/sheets-images-rt/AEjM2Awj_WMOA7JAWkUw6uetjejzk8CryBiFIqAfXOVZLbyamVPGTC5_GrK62zuu6HGH9UMBpiQ6a2Og89uqDDtBpHwfG1IKPsRwT1ta72JMDC6n0E2foy5kIR5IcEDZH9FqTThke_h1RSF9VcD1j_pvSALGcGB5Il9a9yenVw=w399-h220",
+            "Wooden Shoe Rack": "https://docs.google.com/sheets-images-rt/AEjM2Ayadboe_9rQK5b4AYXzvScFuqV6rMNGnxUrsaUPx5jl6E7QC2cxffTorTUrDCt1SXjg51udkDBuIdvPI65aOb9Ib6OydUNa1d1FaX2CbWlYnMmCBXkTG-k07QpNVUZH5dr_nt7RPoJFpPTE0EBo7xSXa0Oxypa2iSA=w399-h220",
+            "Wooden Vase": "https://docs.google.com/sheets-images-rt/AEjM2AxRb-y_4lw3RfQtXFvxcQl868K4o0sewbwufAe0Hs0WiU-37sRg3RjGEbGy7YgJwg2svZpVso0LG0mkg9MA8gkeIwMrRf6t1ckNBQEDTXdFkGpYD-rk5Y0nSQlTQoj6xixkCZAx2UoADCS8DPAcpovP0ol219UQ3m2L4w=w399-h220",
+            "Yasir Qadhi - Lessons from Surah Al Kahf": "https://docs.google.com/sheets-images-rt/AEjM2AwTQMk8sv_YY179X_XDpjQVpIMD77KW9T7y_gp185FDLhOJD8XZixJmHnRi0ZnHlVArdZTaQVHpzGrFqbZCPOq8oh0EMCsO2OpPnG5kZRcVSX5WWpuRg-w4MVzOa77wrW_nVowWFCytMZEFm7WY-Cuk2vlg4jCqynEF-w=w399-h221",
+            "Yasir Qadhi - Lessons from Sural Yusuf": "https://docs.google.com/sheets-images-rt/AEjM2AxHj5jw-SBwYjyg14v-EIS1acMaEKdWxQLq80UkdhhuS5CFMh-HbwkiM1NovCSc8oVfE02wqTg74QpPKMk5XYGRMIAsAJhMqx80XvYSmEYOfy868b08bvRb1HLLsMnKAv-mmuuLvnrMjGJssvp6O5wxcG2Xb-y-SW0=w399-h221"
+        };
+
+        let db = [];
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        const log = (msg) => {
+            const d = document.getElementById('debug');
+            d.style.display = 'block';
+            d.innerText += `> ${msg}\n`;
+        };
 
         /**
-         * Data Fetching Engine
-         * Uses JSONP to bypass CORS issues when running from local file://
+         * INITIALIZATION
          */
         function init() {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&tq=&callback=handleResponse`;
+            // Construct GViz URL with proper callback parameter
+            // 'responseHandler' is the parameter Google uses to define the function name in the JSONP response
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:handleResponse&tq=`;
+
             const script = document.createElement('script');
             script.src = url;
-            script.id = 'gData';
+            script.onerror = () => {
+                log('Script load failed. This might be a network or CORS issue.');
+                showError('Could not load Google Sheets script.');
+            };
             document.body.appendChild(script);
 
-            // Timeout check: if no data after 10s, show troubleshooting
+            // Security timeout
             setTimeout(() => {
-                if (allItems.length === 0) {
-                    renderError();
+                if (db.length === 0) {
+                    log('Timeout: No response from Google Sheets after 8 seconds.');
+                    showError('Connect timed out. Please check sharing permissions (Anyone with link).');
                 }
-            }, 10000);
+            }, 8000);
         }
 
-        // Google visualization callback
-        window.handleResponse = function (response) {
+        /**
+         * GOOGLE RESPONSE HANDLER
+         */
+        window.handleResponse = function (resp) {
+            log('Response received from Google Sheets.');
             try {
-                const rows = response.table.rows;
-                const cols = response.table.cols;
+                const table = resp.table;
+                const rows = table.rows;
 
-                // Map table indices to our data structure
-                // Available/Sold=0, Category=1, ItemName=2, Condition=3, Price=4, Negot=5, AvailNow=6, Notes=7, Photo=8
-                allItems = rows.map(r => {
-                    const vals = r.c;
+                // Map the rows dynamically
+                db = rows.map((row, index) => {
+                    const c = row.c;
+                    // Index-based mapping according to your sheet structure
+                    // 0: Avail/Sold, 1: Cat, 2: Name, 3: Cond, 4: Price, 5: Negot, 6: AvailNow, 7: Notes, 8: Photo
                     return {
-                        status: (vals[0]?.v || '').toString(),
-                        category: (vals[1]?.v || 'General').toString(),
-                        name: (vals[2]?.v || 'Unknown Item').toString(),
-                        condition: (vals[3]?.v || 'N/A').toString(),
-                        price: (vals[4]?.v || 'Contact').toString(),
-                        negotiable: (vals[5]?.v || 'No').toString(),
-                        availability: (vals[6]?.v || 'Yes').toString(),
-                        notes: (vals[7]?.v || '').toString(),
-                        photo: (vals[8]?.v || '').toString()
+                        id: index,
+                        status: c[0] ? c[0].v : '',
+                        category: c[1] ? c[1].v : 'Other',
+                        name: c[2] ? c[2].v : '',
+                        condition: c[3] ? c[3].v : 'Good',
+                        price: c[4] ? (c[4].f || c[4].v) : 'Contact',
+                        negotiable: c[5] ? c[5].v : 'No',
+                        availNow: c[6] ? c[6].v : 'Yes',
+                        notes: c[7] ? c[7].v : '',
+                        photo: c[8] ? c[8].v : null
                     };
-                }).filter(item => item.name !== 'Unknown Item');
+                }).filter(item => item.name); // Filter out empty-named rows
 
-                renderCategories();
+                log(`Parsed ${db.length} items successfully.`);
+                renderFilters();
                 render();
-            } catch (e) {
-                console.error(e);
-                renderError();
+            } catch (err) {
+                log(`Error parsing JSON: ${err.message}`);
+                showError('Failed to parse sheet data structure.');
             }
         };
 
-        function renderCategories() {
-            const cats = ['all', ...new Set(allItems.map(i => i.category))];
-            const container = document.getElementById('catList');
-            container.innerHTML = cats.map(c => `
-            <button class="cat-btn ${currentCategory === c ? 'active' : ''}" 
-                    onclick="setCategory('${c}')">
-                ${c.charAt(0).toUpperCase() + c.slice(1)}
+        /**
+         * UI RENDERING
+         */
+        function renderFilters() {
+            const cats = ['all', ...new Set(db.map(i => i.category))];
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = cats.map(cat => `
+            <button class="btn-filter ${currentFilter === cat ? 'active' : ''}" onclick="filterCat('${cat}')">
+                ${cat.charAt(0).toUpperCase() + cat.slice(1)}
             </button>
         `).join('');
         }
 
-        function setCategory(cat) {
-            currentCategory = cat;
-            renderCategories();
+        function filterCat(cat) {
+            currentFilter = cat;
+            renderFilters();
             render();
         }
 
         function render() {
-            const grid = document.getElementById('mainGrid');
-
-            const filtered = allItems.filter(i => {
-                const matchCat = currentCategory === 'all' || i.category === currentCategory;
-                const matchSearch = i.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    i.notes.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchCat && matchSearch;
+            const grid = document.getElementById('productGrid');
+            const items = db.filter(i => {
+                const matchSearch = i.name.toLowerCase().includes(searchQuery) ||
+                    i.notes.toLowerCase().includes(searchQuery) ||
+                    i.category.toLowerCase().includes(searchQuery);
+                const matchCat = currentFilter === 'all' || i.category === currentFilter;
+                return matchSearch && matchCat;
             });
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div id="loader"><p>No items found match your criteria.</p></div>`;
+            if (items.length === 0) {
+                grid.innerHTML = `<div id="statusDisplay"><h3>No results found</h3></div>`;
                 return;
             }
 
-            grid.innerHTML = filtered.map((item, idx) => {
-                const isSold = item.status.toLowerCase().includes('sold');
+            grid.innerHTML = items.map((i, idx) => {
                 const waMsg = encodeURIComponent(
-                    `Hi! I'm interested in: *${item.name}*\nPrice: Rs. ${item.price}\nCondition: ${item.condition}\nSource: Premium Web Catalog`
+                    `Hi! I'm interested in: *${i.name}*\nPrice: Rs. ${i.price}\nCondition: ${i.condition}\nLink: Premium Catalog`
                 );
 
-                // Image Logic
-                let imgSrc = item.photo;
-                if (!imgSrc || !imgSrc.includes('http')) {
-                    // Check if notes contain a URL
-                    const urlMatch = item.notes.match(/https?:\/\/[^\s]+/);
-                    if (urlMatch) imgSrc = urlMatch[0];
-                    else imgSrc = `https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&auto=format&fit=crop`; // Generic fallback
+                // Image Fallback Logic
+                let photoUrl = IMAGE_MAP[i.name] || i.photo;
+
+                if (!photoUrl || !photoUrl.includes('http')) {
+                    // Try to find a link in notes
+                    const match = i.notes.match(/https?:\/\/[^\s]+/);
+                    if (match && match[0].match(/\.(jpg|jpeg|png|webp)/i)) {
+                        photoUrl = match[0];
+                    } else {
+                        photoUrl = `https://images.unsplash.com/photo-1594489428504-5c0c480a15fd?q=80&w=400&h=300&auto=format&fit=crop`;
+                    }
                 }
 
                 return `
-            <div class="card" style="animation-delay: ${idx * 0.05}s">
-                <div class="card-img">
-                    <div class="status-badge ${isSold ? 'status-sold' : 'status-available'}">
-                        ${item.status || 'Available'}
+                <div class="card" style="animation-delay: ${idx * 0.1}s">
+                    <div class="img-container">
+                        ${i.status ? `<div class="badge">${i.status}</div>` : ''}
+                        <img src="${photoUrl}" alt="${i.name}" loading="lazy">
                     </div>
-                    <img src="${imgSrc}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594489428504-5c0c480a15fd?q=80&w=400&h=300&auto=format&fit=crop'">
-                </div>
-                <div class="card-content">
-                    <div class="card-tag">${item.category}</div>
-                    <h2 class="card-title">${item.name}</h2>
-                    <div class="card-price"><small>Rs.</small> ${item.price}</div>
-                    
-                    <div class="card-specs">
-                        <div class="spec">
-                            <span class="spec-label">Condition</span>
-                            <span class="spec-value">${item.condition}</span>
+                    <div class="body">
+                        <div class="cat">${i.category}</div>
+                        <h2 class="title">${i.name}</h2>
+                        <div class="price-box">
+                            <span class="price-curr">Rs.</span>
+                            <span class="price-val">${i.price}</span>
                         </div>
-                        <div class="spec">
-                            <span class="spec-label">Negotiable</span>
-                            <span class="spec-value">${item.negotiable}</span>
+                        <div class="info-grid">
+                            <div class="info-row">
+                                <span class="label">Condition</span>
+                                <span class="val">${i.condition}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Negotiable</span>
+                                <span class="val">${i.negotiable}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Available</span>
+                                <span class="val">${i.availNow}</span>
+                            </div>
                         </div>
+                        ${i.notes ? `<div class="notes">${i.notes.replace(/\n/g, '<br>')}</div>` : ''}
+                        <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa">
+                            <i class="fab fa-whatsapp"></i> Buy via WhatsApp
+                        </a>
                     </div>
-
-                    ${item.notes ? `<div class="card-notes">${item.notes.replace(/\n/g, '<br>')}</div>` : ''}
-
-                    <a href="https://wa.me/${WA_PHONE}?text=${waMsg}" target="_blank" class="buy-btn">
-                        <i class="fab fa-whatsapp"></i> Buy via WhatsApp
-                    </a>
                 </div>
-            </div>
             `;
             }).join('');
         }
 
-        function renderError() {
-            const grid = document.getElementById('mainGrid');
-            grid.innerHTML = `
-            <div class="error-message">
-                <h3><i class="fa fa-exclamation-triangle"></i> Inventory Sync Offline</h3>
-                <p>Ensure your Google Sheet is set to <b>"Anyone with the link can view"</b>.</p>
-                <div style="text-align: left; max-width: 500px; margin: 20px auto;">
-                    <p><b>Quick Fix:</b></p>
-                    <ol style="margin-left: 20px; font-size: 14px;">
-                        <li>Open your Google Sheet.</li>
-                        <li>Click <b>Share</b> (top right).</li>
-                        <li>Change General Access to <b>"Anyone with the link"</b>.</li>
-                        <li>Refresh this page.</li>
-                    </ol>
-                </div>
-                <button class="cat-btn active" onclick="location.reload()">Retry Connection</button>
+        function showError(msg) {
+            document.getElementById('productGrid').innerHTML = `
+            <div id="statusDisplay" style="border: 2px dashed rgba(255,100,100,0.3); padding: 40px; border-radius: 20px;">
+                <i class="fa fa-plug" style="font-size: 32px; color: #f87171; margin-bottom: 20px;"></i>
+                <h3>Sync Error</h3>
+                <p style="color: #f87171; margin: 10px 0;">${msg}</p>
+                <p style="font-size: 14px; opacity: 0.7;">Make sure your Sheet is Shared to "Anyone with the link".</p>
+                <button onclick="location.reload()" class="btn-filter active" style="margin-top:20px;">Retry Now</button>
             </div>
         `;
         }
 
-        // Search Listener
+        // Search Logic
         document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchTerm = e.target.value;
+            searchQuery = e.target.value.toLowerCase();
             render();
         });
 
-        // Fire it up
         init();
     </script>
 
