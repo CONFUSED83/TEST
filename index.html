@@ -159,81 +159,75 @@
             box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        /* Layout System */
+        /* Premium Masonry Layout */
         #productGrid {
             column-count: 3;
-            column-gap: 24px;
+            column-gap: 32px;
             width: 100%;
         }
 
         @media (max-width: 1200px) {
             #productGrid {
                 column-count: 2;
-                column-gap: 16px;
+                column-gap: 24px;
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             #productGrid {
                 column-count: 2;
-                column-gap: 10px;
+                column-gap: 12px;
             }
 
             .container {
-                padding: 0 10px;
-            }
-
-            .body {
-                padding: 12px !important;
-            }
-
-            .title {
-                font-size: 14px !important;
-                margin-bottom: 6px !important;
-                line-height: 1.2 !important;
-            }
-
-            .price-val {
-                font-size: 1.2rem !important;
-            }
-
-            .price-box {
-                margin-bottom: 10px !important;
-            }
-
-            .info-grid {
-                padding: 6px !important;
-                margin-bottom: 12px !important;
-                gap: 4px !important;
-            }
-
-            .info-row {
-                font-size: 10px !important;
-            }
-
-            .badge {
-                top: 8px !important;
-                right: 8px !important;
-                padding: 3px 8px !important;
-                font-size: 9px !important;
-            }
-
-            .btn-wa {
-                padding: 10px !important;
-                font-size: 12px !important;
-                border-radius: 10px !important;
-                gap: 6px !important;
+                padding: 0 12px;
             }
 
             .controls {
                 flex-direction: column;
-                gap: 10px;
-                padding: 12px;
+                gap: 12px;
             }
 
-            .search input {
-                padding: 10px 15px 10px 45px;
-                font-size: 14px;
+            .search {
+                width: 100%;
+                order: -1;
+            }
+
+            .filters {
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+            }
+
+            .body {
+                padding: 14px !important;
+            }
+
+            .title {
+                font-size: clamp(1rem, 4.5vw, 1.25rem) !important;
+                margin-bottom: 8px !important;
+            }
+
+            .price-val {
+                font-size: 1.4rem !important;
+            }
+
+            .price-box {
+                margin-bottom: 12px !important;
+            }
+
+            .info-grid {
+                padding: 10px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .badge {
+                top: 12px !important;
+                right: 12px !important;
+                padding: 4px 10px !important;
+                font-size: 10px !important;
             }
         }
 
@@ -245,27 +239,16 @@
             overflow: hidden;
             display: inline-block;
             width: 100%;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             break-inside: avoid;
             transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), box-shadow 0.4s;
             animation: fadeIn 0.6s ease-out forwards;
         }
 
-        @media (max-width: 600px) {
-            .card {
-                margin-bottom: 12px;
-            }
-        }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
+                transform: translateY(20px);
             }
         }
 
@@ -384,6 +367,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 3;
             line-clamp: 3;
+            /* Limit long notes */
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -707,7 +691,7 @@
 
             grid.innerHTML = items.map((i, idx) => {
                 const waMsg = encodeURIComponent(
-                    `Hi, I am interested in.\n${i.name}\n\nPrice: Rs. ${i.price}`
+                    `Hi, I am interested in\n${i.name}\n\nPrice: Rs. ${i.price}`
                 );
 
                 // Image Loading Strategy:
