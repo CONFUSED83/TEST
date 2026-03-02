@@ -43,25 +43,19 @@
 
         /* Hero */
         header {
-            padding: 80px 24px 60px;
+            padding: 60px 20px 40px;
             text-align: center;
             background: radial-gradient(circle at top, rgba(34, 197, 94, 0.08), transparent 70%);
         }
 
         header h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3rem, 10vw, 5rem);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 12px;
-            line-height: 0.9;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 0 auto;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+            line-height: 1;
+            color: #fff;
         }
 
         .container {
@@ -165,46 +159,76 @@
             box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        /* Masonry Layout */
+        /* Grid System */
         #productGrid {
-            column-count: 3;
-            column-gap: 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            align-items: start;
         }
 
         @media (max-width: 1200px) {
             #productGrid {
-                column-count: 2;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
             }
         }
 
         @media (max-width: 768px) {
             #productGrid {
-                column-count: 2;
-                column-gap: 16px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
 
             .container {
                 padding: 0 12px;
             }
 
-            .title {
-                font-size: 18px;
-            }
-
-            .price-val {
-                font-size: 24px;
-            }
-
-            .body {
-                padding: 16px;
-            }
-
             .controls {
                 flex-direction: column;
+                gap: 12px;
             }
 
             .search {
                 width: 100%;
+                order: -1;
+            }
+
+            .filters {
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+            }
+
+            .body {
+                padding: 16px !important;
+            }
+
+            .title {
+                font-size: clamp(1rem, 4vw, 1.2rem) !important;
+                margin-bottom: 8px !important;
+            }
+
+            .price-val {
+                font-size: 1.5rem !important;
+            }
+
+            .price-box {
+                margin-bottom: 12px !important;
+            }
+
+            .info-grid {
+                padding: 10px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .badge {
+                top: 12px !important;
+                right: 12px !important;
+                padding: 4px 10px !important;
+                font-size: 10px !important;
             }
         }
 
@@ -212,14 +236,15 @@
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
+            border-radius: 16px;
+            /* Slightly tighter radius for mobile */
             overflow: hidden;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 32px;
-            break-inside: avoid;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            /* Ensure cards in same row have same height potential */
             transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), box-shadow 0.4s;
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         @keyframes fadeIn {
@@ -335,12 +360,17 @@
         }
 
         .notes {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 30px;
-            padding-left: 12px;
+            margin-bottom: 20px;
+            padding-left: 10px;
             border-left: 2px solid var(--accent);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            /* Limit long notes on mobile mobile */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .btn-wa {
@@ -681,7 +711,10 @@
 
                 // If it's a Google Sheet internal image, use proxy to bypass hotlink protection
                 if (photoUrl.includes('sheets-images-rt')) {
-                    photoUrl = `https://images.weserv.nl/?url=${encodeURIComponent(photoUrl)}`;
+                    // Remove size constraints from the original Google URL to get high quality
+                    // (e.g., replace =w399-h220 with =s2048)
+                    const highQualityUrl = photoUrl.replace(/=[wsh]\d+-[wsh]\d+.*$/, '=s2048');
+                    photoUrl = `https://images.weserv.nl/?url=${encodeURIComponent(highQualityUrl)}&output=webp&q=90`;
                 }
 
                 return `
